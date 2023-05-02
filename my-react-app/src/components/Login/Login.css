@@ -1,27 +1,30 @@
-h1 {
+.h1-login {
     color: white;
     text-align: center;
 }
 
-section {
+.section-login {
     border: 2px solid;
     border-color: white;
-    width: fit-content;
+    width: 19%;
+    margin: auto;
+    margin-top: 200px;
 }
 
-.form-control {
-    margin: 0.5rem 0.5rem;
+.form-control-login {
+    margin: 1rem 1rem;
     display: grid;
     grid-template-columns: 100px 1fr;
     align-items: center;
 }
 
-.form-control-2 {
+.form-control-2-login {
     margin: 0.5rem 0.5rem;
     text-align: center;
+    margin-top: 20px;
 }
 
-.button-9 {
+.button-9-login {
     appearance: button;
     backface-visibility: hidden;
     background-color: #405cf5;
@@ -50,14 +53,37 @@ section {
     width: 50%;
 }
 
-.button-9:disabled {
+.button-9-login:disabled {
     cursor: default;
 }
 
-.button-9:focus {
+.button-9-login:focus {
     box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
 }
 
-input {
-    padding: 2px;
+.input-login-1 {
+    padding: 3px;
+    width: 90%;
+    margin-left: 5px;
+}
+
+.input-login-2 {
+    padding: 3px;
+    width: 90%;
+    margin-top: 5px;
+    margin-left: 5px;
+
+}
+
+.p-color-login {
+    color: white
+}
+
+.label-login-1 {
+    color: white;
+}
+
+.label-login-2 {
+    color: white;
+    margin-top: 5px;
 }

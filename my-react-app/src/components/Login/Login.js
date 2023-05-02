@@ -1,47 +1,65 @@
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import './Login.css'
+import { LoginUser } from "../../services/LoginService";
 
-const USERNAME_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,20}$/;
+//REGEX FOR THE INPUT EMAIL AND PASSWORD
+const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.[a-zA-Z]{1,20}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?]).{8,20}$/;
 
 
 function Login() {
-    const [userName, setUserName] = useState(''); const [isUserNameValid, setIsUserNameValid] = useState(false);
+    const [email, setEmail] = useState(''); const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState(''); const [isPasswordValid, setIsPasswordValid] = useState(false);
 
+    //EVERYTIME THE INPUT EMAIL CHANGES THE REGEX TESTS THE INPUT AND SETS isEmailValid
     useEffect(() => {
-        setIsUserNameValid(USERNAME_REGEX.test(userName));
-    }, [userName])
+        setIsEmailValid(EMAIL_REGEX.test(email));
+    }, [email])
+    //EVERYTIME THE INPUT PASSWORD CHANGES THE REGEX TESTS THE INPUT AND SETS isPasswordValid
     useEffect(() => {
         setIsPasswordValid(PWD_REGEX.test(password));
     }, [password])
 
-
-    const handleLogin = () => {
-        if (!isUserNameValid)
-            alert("The username is not in a valid format!")
+    //IF isEmailValid AND isPasswordValid ARE TRUE THEN THE VALUES ARE SENT TO THE SERVER OTHERWISE ERROR
+    const handleLogin = async () => {
+        if (!isEmailValid)
+            alert("The email is not in a valid format!")
         if (!isPasswordValid)
             alert("The password is not in a valid format!")
-        if (isPasswordValid && isUserNameValid) {
-            //axios.post
-            console.log("send it")
+        if (isPasswordValid && isEmailValid) {
+            try {
+                const response = await LoginUser(email, password);
+                //HA A USER SELLER AKO KI KELL MUTATNI EGY ABLAKON AZ ALAPOTAT
+                const accessToken = response?.data?.accessToken;
+                const roles = response?.data?.roles;
+                localStorage.setItem('token', accessToken);
+                //ATKAPCSOLNI A HASZNALOT A KOVETKEZO OLDALRA
+            } catch (err) {
+                if (!err?.response)
+                    alert("No server response!");
+                else if (err.response?.status === 404)
+                    alert("The email or password is incorrect!");
+                else
+                    alert("Login failed!");
+            }
+
         }
     }
     return (
-        <section>
-            <h1>Login</h1>
+        <section className="section-login" >
+            <h1 className="h1-login">Login</h1>
             <form>
-                <div className="form-control" >
-                    <label htmlFor="inputUsername" >Username: </label>
-                    <input id="inputUsername" type="text" onChange={(e) => setUserName(e.target.value)} ></input>
-                    <label htmlFor="inputPassword" >Password:  </label>
-                    <input id="inputPassword" type="text" onChange={(e) => setPassword(e.target.value)} ></input>
+                <div className="form-control-login" >
+                    <label className="label-login-1" htmlFor="inputEmail" >Email: </label>
+                    <input className="input-login-1" id="inputEmail" type="text" onChange={(e) => setEmail(e.target.value)} ></input>
+                    <label className="label-login-2" htmlFor="inputPassword" >Password:  </label>
+                    <input className="input-login-2" id="inputPassword" type="text" onChange={(e) => setPassword(e.target.value)} ></input>
                 </div>
-                <div className="form-control-2" >
-                    <button className="button-9" onClick={handleLogin} >Sign In</button>
-                    <p>Need an account?<br />
-                        <span><Link to={"/register"}>Sign Up</Link></span>
+                <div className="form-control-2-login" >
+                    <button className="button-9-login" onClick={handleLogin} >Sign In</button>
+                    <p className="p-color-login" >Need an account?<br />
+                        <span><Link className="p-color-login" to={"/register"}>Sign Up</Link></span>
                     </p>
                 </div>
             </form>
