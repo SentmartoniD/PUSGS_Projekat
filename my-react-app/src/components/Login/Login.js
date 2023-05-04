@@ -1,4 +1,4 @@
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import './Login.css'
 import { LoginUser } from "../../services/LoginService";
@@ -6,7 +6,6 @@ import { LoginUser } from "../../services/LoginService";
 //REGEX FOR THE INPUT EMAIL AND PASSWORD
 const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.[a-zA-Z]{1,20}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?]).{8,20}$/;
-
 
 function Login() {
     const [email, setEmail] = useState(''); const [isEmailValid, setIsEmailValid] = useState(false);
@@ -21,10 +20,15 @@ function Login() {
         setIsPasswordValid(PWD_REGEX.test(password));
     }, [password])
 
+    const navigate = useNavigate();
+    const navigateToRegister = () => {
+        navigate('/register');
+    };
+
     //IF isEmailValid AND isPasswordValid ARE TRUE THEN THE VALUES ARE SENT TO THE SERVER OTHERWISE ERROR
     const handleLogin = async () => {
         if (!isEmailValid)
-            alert("The email is not in a valid format!")
+            alert("The email is not in a valid format!");
         if (!isPasswordValid)
             alert("The password is not in a valid format!")
         if (isPasswordValid && isEmailValid) {
@@ -34,7 +38,8 @@ function Login() {
                 const accessToken = response?.data?.accessToken;
                 const roles = response?.data?.roles;
                 localStorage.setItem('token', accessToken);
-                //ATKAPCSOLNI A HASZNALOT A KOVETKEZO OLDALRA
+                //ATKELL CSERELNI HOGY ATDOBJON A HOMRA VAGY AMIRE MAR KELL
+                navigateToRegister();
             } catch (err) {
                 if (!err?.response)
                     alert("No server response!");

@@ -1,27 +1,109 @@
-h1 {
+.h1-register {
     color: white;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 5px;
     padding-right: 20px;
     padding-left: 20px;
 }
 
-section {
+.section-register {
     border: 2px solid;
     border-color: white;
-    width: fit-content;
+    width: 70%;
+    max-width: 350px;
+    min-height: 350px;
+    /*  display: flex;
+    flex-direction: column;
+    justify-content: flex-start;*/
+    padding: 1rem;
     margin: auto;
-    margin-top: 200px;
+    margin-top: 20px;
 }
 
 label {
-    padding-right: 10px;
-    padding-left: 20px;
     color: white;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
-input {
-    padding-left: 10px;
-    padding-right: 10px;
 
+.input-register {
+    font-family: 'Nunito', sans-serif;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: white;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.input-register-file {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.6rem;
+    background: orangered;
+    color: #fff;
+    padding: 0.3rem;
+    /* position: relative;*/
+    margin-left: 27px;
+    margin-right: 27px;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.form-control-1-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+.form-control-2-register {
+    margin: 0.5rem 0.5rem;
+    text-align: center;
+}
+
+.p-color-register {
+    color: white
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.35rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.35rem;
+}
+
+.button-register {
+    border-radius: 6px;
+    border-width: 0;
+    width: 50%;
+    margin-top: 20px;
+    height: 44px;
+    align-self: center;
+    /*
+    background-color: #405cf5;
+        font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
+            font-size: 100%;
+            
+            color: #fff;
+            align-self: center;*/
 }
