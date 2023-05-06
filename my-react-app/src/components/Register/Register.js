@@ -12,6 +12,17 @@ const FIRSTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const LASTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z]{3,15},[ ]?[A-Z][a-zA-Z]{3,15}[ ][0-9]{1,4}$/;
 
+function getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
+}
+
+
 function Register() {
     //USESTATES FOR THE INPUT FIELDS
     const [userName, setUserName] = useState(''); const [isUserNameValid, setIsUserNameValid] = useState(false); const [isUserNameFocus, setIsUserNameFocus] = useState(false);
@@ -55,6 +66,7 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.prevenDefault()
+        const imageString = getBase64Image(image)
         //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG
         //axios post
     }
@@ -140,7 +152,7 @@ function Register() {
                     <FontAwesomeIcon icon={faCheck} className={isImageValid ? "valid" : "hide"} />
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
-                <input id='file' type='file' required accept='image/png, image/jpeg' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
+                <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={isPasswordValid || !password ? "hide" : "invalid"} />
