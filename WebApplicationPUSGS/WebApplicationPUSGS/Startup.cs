@@ -11,11 +11,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplicationPUSGS.Models;
+using WebApplicationPUSGS.Services;
+using WebApplicationPUSGS.Interfaces;
+using WebApplicationPUSGS.Infrastucture;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationPUSGS
 {
     public class Startup
     {
+        //private readonly string _cors = "cors";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +39,28 @@ namespace WebApplicationPUSGS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicationPUSGS", Version = "v1" });
             });
+
+            /*
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: _cors, builder => {
+                    builder.WithOrigins("https://localhost:3000")//Ovde navodimo koje sve aplikacije smeju kontaktirati nasu,u ovom slucaju nas React front
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                });
+            });*/
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddDbContext<PUSGSWebAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PUSGSWebAppDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +74,8 @@ namespace WebApplicationPUSGS
             }
 
             app.UseHttpsRedirection();
+            // app.UseCors(_cors);
+            app.UseCors("AllowAnyOrigin");
 
             app.UseRouting();
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { RegisterUser, RegisterUserProba } from '../../services/RegisterService';
 import './Register.css'
 
 //REGEX FOR USERNAME, EMAIL, PASSWORD, FIRSTNAME, LASTNAME AND ADDRESS
@@ -12,17 +13,6 @@ const FIRSTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const LASTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z]{3,15},[ ]?[A-Z][a-zA-Z]{3,15}[ ][0-9]{1,4}$/;
 
-function getBase64Image(img) {
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-    var dataURL = canvas.toDataURL("image/png");
-    return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
-}
-
-
 function Register() {
     //USESTATES FOR THE INPUT FIELDS
     const [userName, setUserName] = useState(''); const [isUserNameValid, setIsUserNameValid] = useState(false); const [isUserNameFocus, setIsUserNameFocus] = useState(false);
@@ -30,6 +20,7 @@ function Register() {
     const [firstName, setFirstName] = useState(''); const [isFirstNameValid, setIsFirstNameValid] = useState(false); const [isFirstNameFocus, setIsFirstNameFocus] = useState(false);
     const [lastName, setLastName] = useState(''); const [isLastNameValid, setIsLastNameValid] = useState(false); const [isLastNameFocus, setIsLastNameFocus] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState(''); const [isDateOfBirthValid, setIsDateOfBirthValid] = useState(false);
+    const [userType, setUserType] = useState(''); const [isUserTypeValid, setIsUserTypeValid] = useState(false);
     const [image, setImage] = useState(); const [isImageValid, setIsImageValid] = useState(false);
     const [address, setAddress] = useState(''); const [isAddressValid, setIsAdrressValid] = useState(false); const [isAddressFocus, setIsAddressFocus] = useState(false);
     const [password, setPassword] = useState(''); const [isPasswordValid, setIsPasswordValid] = useState(false); const [isPasswordFocus, setIsPasswordFocus] = useState(false);
@@ -58,6 +49,9 @@ function Register() {
         setIsDateOfBirthValid(dateOfBirth ? true : false);
     }, [dateOfBirth])
     useEffect(() => {
+        setIsUserTypeValid(userType === '' ? false : true);
+    }, [userType])
+    useEffect(() => {
         setIsImageValid(image ? true : false);
     }, [image])
     useEffect(() => {
@@ -65,10 +59,24 @@ function Register() {
     }, [address])
 
     const handleSubmit = async (e) => {
-        e.prevenDefault()
-        const imageString = getBase64Image(image)
-        //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG
-        //axios post
+        e.preventDefault()
+        //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
+        const imageString = btoa(image);
+        try {
+            //const response = await RegisterUserProba();
+            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password)
+            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
+            console.log("masodik resz")
+
+            console.log(response.data);
+        }
+        catch (err) {
+            console.log(err)
+            console.log("Registration failed");
+        }
+
+        console.log("harmadik resz")
+
     }
 
     return (
@@ -143,8 +151,11 @@ function Register() {
                     Must start with the name of the country, then city and street!<br />
                     Example : Serbia, NoviSad, Telepska 2!
                 </p>
-                <label htmlFor='type' >Type of user : </label>
-                <select className='input-register' name="usertype" id="type" >
+                <label htmlFor='type' >Type of user :
+                    <FontAwesomeIcon icon={faCheck} className={isUserTypeValid ? "valid" : "hide"} />
+                </label>
+                <select className='input-register' name="usertype" id="type" autoComplete='off' required onChange={(e) => setUserType(e.target.value)} >
+                    <option value="">--Select--</option>
                     <option value="buyer">Buyer</option>
                     <option value="seller">Seller</option>
                 </select>

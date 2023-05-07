@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const LoginUser = async (email, pwd) => {
-    return await axios.post(process.env.API_URL, JSON.stringify({ email: email, password: pwd }),
+export const LoginUser = async (eml, pwd) => {
+    return await axios.post('https://localhost:44368/api/users/login', { email: eml, password: pwd },
         {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true
