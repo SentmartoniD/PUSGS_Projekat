@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApplicationPUSGS.Models
+namespace WebApplicationPUSGS.Dto
 {
-    public class User
+    public class UserDtoRegistration
     {
-        public int UserId { get; set; }
+        public int UserId { get; set; }//KELL IT HOGY LEGYEN AZ ID ????????????????????
 
         public string Username { get; set; }
 
@@ -15,9 +15,9 @@ namespace WebApplicationPUSGS.Models
 
         public string FirstName { get; set; }
 
-        public string LastName { get; set;}
+        public string LastName { get; set; }
 
-        public string DateOfBirth { get; set;}
+        public string DateOfBirth { get; set; }
 
         public string Address { get; set; }
 
@@ -26,8 +26,5 @@ namespace WebApplicationPUSGS.Models
         public string Image { get; set; }
 
         public string Password { get; set; }
-
-        //ESETLEG MARADT MEG : - BOOL APPROVED, - BOOL VERIFIED, - DOUBLE CASHBALANCE
-        //MEG MEG A REFERENCAK A MASIK TIPUSU ADATOKRA
     }
 }

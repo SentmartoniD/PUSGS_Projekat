@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplicationPUSGS.Dto
 {
-    public class UserDto
+    public class UserDtoLogin
     {
         public string Email { get; set; }
 

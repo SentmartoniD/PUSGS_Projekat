@@ -26,7 +26,8 @@ function Login() {
     };
 
     //IF isEmailValid AND isPasswordValid ARE TRUE THEN THE VALUES ARE SENT TO THE SERVER OTHERWISE ERROR
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
         if (!isEmailValid)
             alert("The email is not in a valid format!");
         if (!isPasswordValid)
@@ -34,19 +35,18 @@ function Login() {
         if (isPasswordValid && isEmailValid) {
             try {
                 const response = await LoginUser(email, password);
+                console.log(response.data)
+                const token = response.data;
                 //HA A USER SELLER AKO KI KELL MUTATNI EGY ABLAKON AZ ALAPOTAT
-                const accessToken = response?.data?.accessToken;
-                const roles = response?.data?.roles;
-                localStorage.setItem('token', accessToken);
+                localStorage.setItem('token', token);
+                console.log(token?.claims);
                 //ATKELL CSERELNI HOGY ATDOBJON A HOMRA VAGY AMIRE MAR KELL
                 navigateToRegister();
             } catch (err) {
                 if (!err?.response)
-                    alert("No server response!");
-                else if (err.response?.status === 404)
-                    alert("The email or password is incorrect!");
+                    alert("No server response, login failed!");
                 else
-                    alert("Login failed!");
+                    alert(JSON.stringify(err.response.data));
             }
 
         }

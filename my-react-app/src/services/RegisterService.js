@@ -24,9 +24,6 @@ export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, p
     );
 }
 
-export const RegisterUserProba = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, pwd) => {
-    return await axios.get('https://localhost:44368/api/users/proba-get'
-    );
-}
+
 
 

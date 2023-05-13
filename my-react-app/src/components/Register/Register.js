@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RegisterUser, RegisterUserProba } from '../../services/RegisterService';
+import { RegisterUser } from '../../services/RegisterService';
 import './Register.css'
 
 //REGEX FOR USERNAME, EMAIL, PASSWORD, FIRSTNAME, LASTNAME AND ADDRESS
@@ -58,24 +58,28 @@ function Register() {
         setIsAdrressValid(ADDRESS_REGEX.test(address));
     }, [address])
 
+    const navigate = useNavigate()
+    const navigateToLogin = () => {
+        navigate('/login');
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
         const imageString = btoa(image);
         try {
-            //const response = await RegisterUserProba();
             console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password)
             const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
-            console.log("masodik resz")
-
             console.log(response.data);
+            navigateToLogin();
         }
         catch (err) {
+            if (!err?.response)
+                alert("No server response, registration failed!")
+            else
+                alert(JSON.stringify(err.response.data))
             console.log(err)
-            console.log("Registration failed");
         }
-
-        console.log("harmadik resz")
 
     }
 

@@ -10,8 +10,14 @@ namespace WebApplicationPUSGS.Interfaces
     public interface IUserService
     {
         //Add the new user to the database
-        User AddUser(User newUser);
+        UserDtoRegistration AddUser(UserDtoRegistration newUser);
         //Check if the user is in the databse and create the token for him
-        UserDto LoginUser(UserDto userDto);
+        string LoginUser(UserDtoLogin userDto);
+
+        void DeleteUserById(int id);
+
+        UserDtoRegistration GetUserById(int id);
+
+        List<UserDtoRegistration> GetUsers();
     }
 }

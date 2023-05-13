@@ -21,7 +21,7 @@ namespace WebApplicationPUSGS.Infrastucture
 
             modelBuilder.Entity<User>().HasData(new User
             {
-                UserId = 0,
+                UserId = -1,
                 Username = "PeraP",
                 Email = "peraperic@gmail.com",
                 FirstName = "Pera",
@@ -30,7 +30,7 @@ namespace WebApplicationPUSGS.Infrastucture
                 Address = "Serbia, NoviSad, Temerinska 99",
                 UserType = "Admin",
                 Image = "QzpcZmFrZXBhdGhccGVyYV9rZXAucG5n",
-                Password = "PeraPeric1234!"
+                Password = "3A2C878140187B8A880BE9FC9E7BF0A4CABD3C707245A5221EB05E3208AF5067"
             });
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PUSGSWebAppDbContext).Assembly);
