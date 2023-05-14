@@ -60,7 +60,7 @@ function Register() {
 
     const navigate = useNavigate()
     const navigateToLogin = () => {
-        navigate('/login');
+        navigate('/');
     };
 
     const handleSubmit = async (e) => {
@@ -75,10 +75,9 @@ function Register() {
         }
         catch (err) {
             if (!err?.response)
-                alert("No server response, registration failed!")
+                alert("No server response, registration failed!");
             else
-                alert(JSON.stringify(err.response.data))
-            console.log(err)
+                alert(JSON.stringify(err.response.data));
         }
 
     }

@@ -21,8 +21,8 @@ function Login() {
     }, [password])
 
     const navigate = useNavigate();
-    const navigateToRegister = () => {
-        navigate('/register');
+    const navigateToHome = () => {
+        navigate('/home');
     };
 
     //IF isEmailValid AND isPasswordValid ARE TRUE THEN THE VALUES ARE SENT TO THE SERVER OTHERWISE ERROR
@@ -39,9 +39,13 @@ function Login() {
                 const token = response.data;
                 //HA A USER SELLER AKO KI KELL MUTATNI EGY ABLAKON AZ ALAPOTAT
                 localStorage.setItem('token', token);
-                console.log(token?.claims);
-                //ATKELL CSERELNI HOGY ATDOBJON A HOMRA VAGY AMIRE MAR KELL
-                navigateToRegister();
+                localStorage.setItem('email', email);
+                const [header, payload, signature] = token.split('.');
+                const decodedPayload = atob(payload);
+                const payloadObj = JSON.parse(decodedPayload);
+                console.log(payloadObj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
+
+                navigateToHome();
             } catch (err) {
                 if (!err?.response)
                     alert("No server response, login failed!");

@@ -62,9 +62,9 @@ namespace WebApplicationPUSGS.Services
                 //Mozemo dodati Claimove u token, oni ce biti vidljivi u tokenu i mozemo ih koristiti za autorizaciju
                 if (user.UserType == "Admin")
                     claims.Add(new Claim(ClaimTypes.Role, "admin")); //Add user type to claim
-                if (user.UserType == "Buyer")
+                if (user.UserType == "buyer")
                     claims.Add(new Claim(ClaimTypes.Role, "buyer")); //Add user type to claim
-                if (user.UserType == "Seller")
+                if (user.UserType == "seller")
                     claims.Add(new Claim(ClaimTypes.Role, "seller")); //Add user type to claim
                 //mozemo izmisliti i mi neki nas claim
                 //claims.Add(new Claim("Neki_moj_claim", "imam_ga"));
@@ -76,7 +76,7 @@ namespace WebApplicationPUSGS.Services
                 var tokeOptions = new JwtSecurityToken(
                     issuer: "http://localhost:44368", //url servera koji je izdao token
                     claims: claims, //claimovi
-                    expires: DateTime.Now.AddMinutes(30), //vazenje tokena u minutama
+                    expires: DateTime.Now.AddMinutes(50), //vazenje tokena u minutama
                     signingCredentials: signinCredentials //kredencijali za potpis
                 );
                 string tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
@@ -121,6 +121,14 @@ namespace WebApplicationPUSGS.Services
             }
 
             return hashString;
+        }
+
+        public UserDtoRegistration GetUserByEmail(string email)
+        {
+            IQueryable<User> query = _dbContext.Users;
+            query = query.Where(e => e.Email.Contains(email));
+            User user = query.ToList<User>()[0];
+            return _mapper.Map<UserDtoRegistration>(user);
         }
     }
 }

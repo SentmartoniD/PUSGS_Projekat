@@ -8,6 +8,7 @@ using WebApplicationPUSGS.Interfaces;
 using WebApplicationPUSGS.Services;
 using WebApplicationPUSGS.Models;
 using WebApplicationPUSGS.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplicationPUSGS.Controllers
 {
@@ -69,10 +70,25 @@ namespace WebApplicationPUSGS.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("get-user-by-email/{email}")]
+      //  [Authorize(Roles = "admin, buyer, seller")]
+        public ActionResult GetUserByEmail(string email) {
+            try
+            {  
+                return Ok(_userService.GetUserByEmail(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
         
-        //get by id
+        }
+
+
+        
         [HttpGet("{id:int}")]
-        public ActionResult GetUser(int id) {
+        public ActionResult GetUserById(int id) {
             try
             {
                 return Ok(_userService.GetUserById(id));

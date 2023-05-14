@@ -24,6 +24,22 @@ export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, p
     );
 }
 
+export const GetToken = () => {
+    return localStorage.getItem('token');
+}
 
+const config = {
+    headers: {
+        "Authorization": `Bearer ${GetToken()}`
+    }
+}
+
+export const GetEmail = () => {
+    return localStorage.getItem('email');
+}
+
+export const GetRegisteredUser = async () => {
+    return await axios.get('https://localhost:44368/api/users/get-user-by-email/' + GetEmail(), config);
+}
 
 
