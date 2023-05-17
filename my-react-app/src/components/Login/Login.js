@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import './Login.css'
-import { LoginUser } from "../../services/LoginService";
+import { LoginUser } from "../../services/UserService";
 
 //REGEX FOR THE INPUT EMAIL AND PASSWORD
 const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.[a-zA-Z]{1,20}$/;

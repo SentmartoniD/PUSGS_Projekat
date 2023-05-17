@@ -6,20 +6,28 @@ import Register from './components/Register/Register';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
-import RequireAuth from './components/RequireAuth';
+import Articles from './components/Articles/Articles';
+import ProtectedRoute from './components/ProtectedRoute';
+import AproveVerifyUsers from './components/AproveVerifyUsers/AproveVerifyUsers';
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Login />} />
       <Route path='/register' element={<Register />} />
-      {/* <Route element={<RequireAuth allowedRoles={["admin", "buyer", "seller"]} />} > */}
-      <Route path='/home' element={<Dashboard />}>
-        {/* <Route element={<RequireAuth allowedRoles={["admin", "buyer", "seller"]} />} >*/}
-        <Route path='/home/profile' element={<Profile />} />
+      <Route element={<ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} />} >
+        <Route path='/home' element={<Dashboard />}>
+          <Route element={< ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} />} >
+            <Route path='/home/profile' element={<Profile />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+            <Route path='/home/articles' element={<Articles />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
+            <Route path='/home/aprove-verify-users' element={AproveVerifyUsers} />
+          </Route>
+        </Route>
       </Route>
-      {/*</Route>*/}
-      {/* </Route>*/}
     </Routes>
   );
 }

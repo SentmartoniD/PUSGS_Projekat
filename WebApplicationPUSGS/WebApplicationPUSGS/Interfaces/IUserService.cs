@@ -21,5 +21,7 @@ namespace WebApplicationPUSGS.Interfaces
         UserDtoRegistration GetUserByEmail(string email);
 
         List<UserDtoRegistration> GetUsers();
+
+        UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration);
     }
 }

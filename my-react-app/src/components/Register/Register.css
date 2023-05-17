@@ -107,3 +107,12 @@ label {
             color: #fff;
             align-self: center;*/
 }
+
+.img-register {
+    margin-right: 40px;
+}
+
+.div-register-img {
+    display: flex;
+    /* align-items: center;*/
+}

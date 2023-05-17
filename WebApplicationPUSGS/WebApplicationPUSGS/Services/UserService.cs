@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -128,6 +129,40 @@ namespace WebApplicationPUSGS.Services
             IQueryable<User> query = _dbContext.Users;
             query = query.Where(e => e.Email.Contains(email));
             User user = query.ToList<User>()[0];
+            return _mapper.Map<UserDtoRegistration>(user);
+        }
+
+        public UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration)
+        {
+                var user =  _dbContext.Users.FirstOrDefault(e => e.UserId == userDtoRegistration.UserId);
+
+                if (user != null) {
+                    if (userDtoRegistration.Username != null && userDtoRegistration.Username != string.Empty)
+                        user.Username = userDtoRegistration.Username;
+                    if (userDtoRegistration.Email != null && userDtoRegistration.Email != string.Empty)
+                        user.Email = userDtoRegistration.Email;
+                    if (userDtoRegistration.FirstName != null && userDtoRegistration.FirstName != string.Empty)
+                        user.FirstName = userDtoRegistration.FirstName;
+                    if (userDtoRegistration.LastName != null && userDtoRegistration.LastName != string.Empty)
+                        user.LastName = userDtoRegistration.LastName;
+                    if (userDtoRegistration.DateOfBirth != null && userDtoRegistration.DateOfBirth != string.Empty)
+                        user.DateOfBirth = userDtoRegistration.DateOfBirth;
+                    if (userDtoRegistration.Address != null && userDtoRegistration.Address != string.Empty)
+                        user.Address = userDtoRegistration.Address;
+                    if (userDtoRegistration.UserType != null && userDtoRegistration.UserType != string.Empty)
+                        user.UserType = userDtoRegistration.UserType;
+                    if (userDtoRegistration.Image != null && userDtoRegistration.Image != string.Empty)
+                        user.Image = userDtoRegistration.Image;
+                    if (userDtoRegistration.Password != null && userDtoRegistration.Password != string.Empty)
+                        user.Password = GetHashValueInString(userDtoRegistration.Password);
+            }
+            _dbContext.Users.Remove(_mapper.Map<User>(userDtoRegistration));
+
+            _dbContext.Users.Add(user);
+
+            _dbContext.SaveChanges();
+
+
             return _mapper.Map<UserDtoRegistration>(user);
         }
     }

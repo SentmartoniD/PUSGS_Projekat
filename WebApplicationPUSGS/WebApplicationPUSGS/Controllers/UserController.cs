@@ -57,8 +57,37 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
+        [HttpGet("get-user-by-email/{email}")]
+        [Authorize(Roles = "admin, buyer, seller")]
+        public ActionResult GetUserByEmail(string email) {
+            try
+            {  
+                return Ok(_userService.GetUserByEmail(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
+        
+        }
+        
+        [HttpPut("update/{id:int}")]
+        [Authorize(Roles = "admin, buyer, seller")]
+        public ActionResult UpdateUser(int id, [FromBody] UserDtoRegistration userDtoRegistration) {
+            try
+            {
+                return Ok(_userService.UpdateUser(id, userDtoRegistration));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
+
+        }
+
         [HttpDelete("{id:int}")]
-        public ActionResult DeleteUser(int id) {
+        public ActionResult DeleteUser(int id)
+        {
             try
             {
                 _userService.DeleteUserById(id);
@@ -71,22 +100,6 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
-        [HttpGet("get-user-by-email/{email}")]
-      //  [Authorize(Roles = "admin, buyer, seller")]
-        public ActionResult GetUserByEmail(string email) {
-            try
-            {  
-                return Ok(_userService.GetUserByEmail(email));
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
-            }
-        
-        }
-
-
-        
         [HttpGet("{id:int}")]
         public ActionResult GetUserById(int id) {
             try

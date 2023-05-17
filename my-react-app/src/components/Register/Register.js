@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RegisterUser } from '../../services/RegisterService';
+import { RegisterUser } from '../../services/UserService';
 import './Register.css'
 
 //REGEX FOR USERNAME, EMAIL, PASSWORD, FIRSTNAME, LASTNAME AND ADDRESS
@@ -21,7 +21,7 @@ function Register() {
     const [lastName, setLastName] = useState(''); const [isLastNameValid, setIsLastNameValid] = useState(false); const [isLastNameFocus, setIsLastNameFocus] = useState(false);
     const [dateOfBirth, setDateOfBirth] = useState(''); const [isDateOfBirthValid, setIsDateOfBirthValid] = useState(false);
     const [userType, setUserType] = useState(''); const [isUserTypeValid, setIsUserTypeValid] = useState(false);
-    const [image, setImage] = useState(); const [isImageValid, setIsImageValid] = useState(false);
+    const [image, setImage] = useState(""); const [isImageValid, setIsImageValid] = useState(false);
     const [address, setAddress] = useState(''); const [isAddressValid, setIsAdrressValid] = useState(false); const [isAddressFocus, setIsAddressFocus] = useState(false);
     const [password, setPassword] = useState(''); const [isPasswordValid, setIsPasswordValid] = useState(false); const [isPasswordFocus, setIsPasswordFocus] = useState(false);
     const [matchPassword, setMatchPassword] = useState(''); const [isMatchPasswordValid, setIsMatchPasswordValid] = useState(''); const [isMatchPasswordFocus, setIsMatchPasswordFocus] = useState(false);
@@ -53,6 +53,7 @@ function Register() {
     }, [userType])
     useEffect(() => {
         setIsImageValid(image ? true : false);
+        console.log(image)
     }, [image])
     useEffect(() => {
         setIsAdrressValid(ADDRESS_REGEX.test(address));
@@ -166,7 +167,10 @@ function Register() {
                     <FontAwesomeIcon icon={faCheck} className={isImageValid ? "valid" : "hide"} />
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
-                <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
+                <div className='div-register-img'>
+                    <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
+                    <img className='img-register' width={70} height={70} src={(image != "") ? image.split("\\").pop() : null} ></img>
+                </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />
                     <FontAwesomeIcon icon={faTimes} className={isPasswordValid || !password ? "hide" : "invalid"} />
