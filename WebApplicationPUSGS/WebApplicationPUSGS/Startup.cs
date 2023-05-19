@@ -107,7 +107,7 @@ namespace WebApplicationPUSGS
 
             services.AddScoped<IUserService, UserService>();
 
-            services.AddDbContext<PUSGSWebAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PUSGSWebAppDatabase")));
+            services.AddDbContext<PUSGSWebAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PUSGSWebAppDatabase2")));
 
             var mapperConfig = new MapperConfiguration(mc =>
             {

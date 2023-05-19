@@ -35,6 +35,9 @@ namespace WebApplicationPUSGS.Infrastucture.Configurations
 
             builder.Property(x => x.Password).HasMaxLength(70);
 
+            builder.Property(x => x.Approved).HasDefaultValue(Status.UNDEFINED);
+
+            builder.Property(x => x.Verified).HasDefaultValue(Status.UNDEFINED);
         }
     }
 }

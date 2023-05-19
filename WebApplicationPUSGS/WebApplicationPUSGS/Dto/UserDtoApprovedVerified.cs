@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplicationPUSGS.Models;
 
-namespace WebApplicationPUSGS.Models
+namespace WebApplicationPUSGS.Dto
 {
-    public class User
+    public class UserDtoApprovedVerified
     {
         public int UserId { get; set; }
 
@@ -15,9 +16,9 @@ namespace WebApplicationPUSGS.Models
 
         public string FirstName { get; set; }
 
-        public string LastName { get; set;}
+        public string LastName { get; set; }
 
-        public string DateOfBirth { get; set;}
+        public string DateOfBirth { get; set; }
 
         public string Address { get; set; }
 
@@ -25,14 +26,8 @@ namespace WebApplicationPUSGS.Models
 
         public string Image { get; set; }
 
-        public string Password { get; set; }
-
-        //ESETLEG MARADT MEG :  - DOUBLE CASHBALANCE
-
         public Status Approved { get; set; }
 
         public Status Verified { get; set; }
-
-        //MEG MEG A REFERENCAK A MASIK TIPUSU ADATOKRA
     }
 }

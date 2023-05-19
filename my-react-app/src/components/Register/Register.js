@@ -72,6 +72,7 @@ function Register() {
             console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password)
             const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
             console.log(response.data);
+            alert("You have successfully registered!")
             navigateToLogin();
         }
         catch (err) {

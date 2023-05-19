@@ -56,6 +56,15 @@ export const UpdateUser = async (id, usrnm, eml, fnm, lnm, dtb, addr, typU, img,
     return await axios.put('https://localhost:44368/api/users/update/' + id, {
         userid: id, username: usrnm, email: eml, firstname: fnm, lastname: lnm,
         dateofbirth: dtb, address: addr, usertype: typU, image: img, password: pwd
-    },
+    }, config
     );
 }
+
+export const GetUsers = async () => {
+    return await axios.get('https://localhost:44368/api/users/get-all', config);
+}
+
+export const UpdateUserStatus = async (id, status) => {
+    return await axios.post('https://localhost:44368/api/users/update-status', { userid: id, status: status }, config);
+}
+

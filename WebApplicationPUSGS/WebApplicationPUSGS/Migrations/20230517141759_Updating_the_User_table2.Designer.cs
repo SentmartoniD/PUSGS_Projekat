@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationPUSGS.Infrastucture;
 
 namespace WebApplicationPUSGS.Migrations
 {
     [DbContext(typeof(PUSGSWebAppDbContext))]
-    partial class PUSGSWebAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230517141759_Updating_the_User_table2")]
+    partial class Updating_the_User_table2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +31,8 @@ namespace WebApplicationPUSGS.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
-                    b.Property<int>("Approved")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
 
                     b.Property<string>("DateOfBirth")
                         .HasMaxLength(20)
@@ -66,10 +66,8 @@ namespace WebApplicationPUSGS.Migrations
                         .HasMaxLength(22)
                         .HasColumnType("nvarchar(22)");
 
-                    b.Property<int>("Verified")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                    b.Property<bool>("Verified")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId");
 
@@ -88,7 +86,7 @@ namespace WebApplicationPUSGS.Migrations
                         {
                             UserId = 1,
                             Address = "Serbia, NoviSad, Temerinska 99",
-                            Approved = 0,
+                            Approved = true,
                             DateOfBirth = "1995-05-13",
                             Email = "peraperic@gmail.com",
                             FirstName = "Pera",
@@ -96,8 +94,8 @@ namespace WebApplicationPUSGS.Migrations
                             LastName = "Peric",
                             Password = "3A2C878140187B8A880BE9FC9E7BF0A4CABD3C707245A5221EB05E3208AF5067",
                             UserType = "admin",
-                            Username = "PeraP123",
-                            Verified = 2
+                            Username = "PeraP",
+                            Verified = false
                         });
                 });
 #pragma warning restore 612, 618

@@ -7,8 +7,8 @@ import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
 import Articles from './components/Articles/Articles';
-import ProtectedRoute from './components/ProtectedRoute';
-import AproveVerifyUsers from './components/AproveVerifyUsers/AproveVerifyUsers';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import ApproveVerifyUsers from './components/ApproveVerifyUsers/ApproveVerifyUsers';
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
             <Route path='/home/articles' element={<Articles />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
-            <Route path='/home/aprove-verify-users' element={AproveVerifyUsers} />
+            <Route path='/home/aprove-verify-users' element={<ApproveVerifyUsers />} />
           </Route>
         </Route>
       </Route>

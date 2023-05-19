@@ -20,8 +20,10 @@ namespace WebApplicationPUSGS.Interfaces
 
         UserDtoRegistration GetUserByEmail(string email);
 
-        List<UserDtoRegistration> GetUsers();
+        List<UserDtoApprovedVerified> GetUsers();
 
         UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration);
+
+        UserDtoStatus UpdateUserStatus(UserDtoStatus userDtoStatus);
     }
 }

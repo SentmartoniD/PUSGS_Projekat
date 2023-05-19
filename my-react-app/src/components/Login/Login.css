@@ -87,3 +87,8 @@
     color: white;
     margin-top: 5px;
 }
+
+.image-articles {
+    position: relative;
+    text-align: center;
+}

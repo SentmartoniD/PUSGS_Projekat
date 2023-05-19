@@ -21,7 +21,7 @@ namespace WebApplicationPUSGS.Controllers
         public UserController(IUserService userService) {
             _userService = userService;
         }
-
+        
         [HttpPost("registration")]
         public ActionResult CreateUser([FromBody] UserDtoRegistration userDto) {
             try
@@ -52,6 +52,10 @@ namespace WebApplicationPUSGS.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, "Invalid email provided!");
                 else if (e.Message == "There is no user with that password!")
                     return StatusCode(StatusCodes.Status404NotFound, "Invalid password provided!");
+                else if (e.Message == "The user hasnt been approved yet!")
+                    return StatusCode(StatusCodes.Status409Conflict, "The user hasnt been approved yet!");
+                else if (e.Message == "The user registration has been denied!")
+                    return StatusCode(StatusCodes.Status409Conflict, "The user registration has been denied!");
                 else
                     return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
             }
@@ -115,7 +119,8 @@ namespace WebApplicationPUSGS.Controllers
             
         }
 
-        [HttpGet]
+        [HttpGet("get-all")]
+        [Authorize(Roles = "admin")]
         public ActionResult GetUsers() {
             try
             {
@@ -126,6 +131,21 @@ namespace WebApplicationPUSGS.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             
+        }
+
+        [HttpPost("update-status")]
+        [Authorize(Roles = "admin")]
+        public ActionResult UpdateStatus([FromBody] UserDtoStatus userDtoStatus)
+        {
+            try
+            {
+                return Ok(_userService.UpdateUserStatus(userDtoStatus));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
         }
     }
 }

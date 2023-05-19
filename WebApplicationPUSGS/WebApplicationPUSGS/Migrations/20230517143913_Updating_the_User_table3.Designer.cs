@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplicationPUSGS.Infrastucture;
 
 namespace WebApplicationPUSGS.Migrations
 {
     [DbContext(typeof(PUSGSWebAppDbContext))]
-    partial class PUSGSWebAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230517143913_Updating_the_User_table3")]
+    partial class Updating_the_User_table3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,7 +98,7 @@ namespace WebApplicationPUSGS.Migrations
                             LastName = "Peric",
                             Password = "3A2C878140187B8A880BE9FC9E7BF0A4CABD3C707245A5221EB05E3208AF5067",
                             UserType = "admin",
-                            Username = "PeraP123",
+                            Username = "PeraP",
                             Verified = 2
                         });
                 });

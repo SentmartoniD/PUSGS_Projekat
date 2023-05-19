@@ -11,6 +11,7 @@ const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z]{3,15},[ ]?[A-Z
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?]).{8,20}$/;
 
 function Profile() {
+    const [trigger, setTrigger] = useState(0);
     const [user, setUser] = useState([]);
     const [userName, setUserName] = useState(''); const [isUserNameValid, setIsUserNameValid] = useState(false); const [isUserNameFocus, setIsUserNameFocus] = useState(false);
     const [email, setEmail] = useState(''); const [isEmailValid, setIsEmailValid] = useState(false); const [isEmailFocus, setIsEmailFocus] = useState(false);
@@ -41,7 +42,7 @@ function Profile() {
             }
         }
         getUser();
-    }, []);
+    }, [trigger]);
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
     }, [userName])
@@ -78,16 +79,21 @@ function Profile() {
         e.preventDefault();
         console.log(user.userId)
         if (userName === "" && email === "" && firstName === "" && lastName === "" && dateOfBirth === "" &&
-            address === "" && userType === "" && image === "" && password === "" && matchPassword === "")
+            address === "" && userType === "" && image === "" && password === "" && matchPassword === "") {
             alert("Your profile wont be updated, you didnt change any information!")
-        if (setIsUserNameValid === false && userName != "")
+            return;
+        }
+        if (setIsUserNameValid === false && userName != "") {
             alert("The username is not in a valid format!");
+            return;
+        }
 
         const imageString = btoa(image);
         try {
             const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
             console.log(response.data);
             alert("User updated successfully!")
+            setTrigger(trigger + 1);
         }
         catch (err) {
             if (!err?.response)
@@ -170,10 +176,10 @@ function Profile() {
                     Must start with the name of the country, then city and street!<br />
                     Example : Serbia, NoviSad, Telepska 2!
                 </p>
-                <label hidden={user.userType == "Admin" ? true : false} htmlFor='type' >Type of user :
+                <label hidden={user.userType == "admin" ? true : false} htmlFor='type' >Type of user :
                     <FontAwesomeIcon icon={faCheck} className={isUserTypeValid ? "valid" : "hide"} />
                 </label>
-                <select hidden={user.userType == "Admin" ? true : false} className='input-profile' name="usertype" id="type" autoComplete='off' defaultValue={user.userType} onChange={(e) => setUserType(e.target.value)} >
+                <select hidden={user.userType == "admin" ? true : false} className='input-profile' name="usertype" id="type" autoComplete='off' defaultValue={user.userType} onChange={(e) => setUserType(e.target.value)} >
                     <option value="">--Select--</option>
                     <option value='buyer'>Buyer</option>
                     <option value="seller">Seller</option>
