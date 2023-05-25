@@ -100,3 +100,16 @@
 .image-articles {
     align-self: center;
 }
+
+.item-articles {
+    /* display: flex;
+    justify-content: flex-start;*/
+    /*align-items: center;*/
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.25rem 0;
+    background-color: grey;
+}
+
+.ul-items-articles {
+    list-style-type: none
+}

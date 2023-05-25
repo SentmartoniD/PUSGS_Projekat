@@ -53,7 +53,6 @@ function Register() {
     }, [userType])
     useEffect(() => {
         setIsImageValid(image ? true : false);
-        console.log(image)
     }, [image])
     useEffect(() => {
         setIsAdrressValid(ADDRESS_REGEX.test(address));
@@ -82,6 +81,23 @@ function Register() {
                 alert(JSON.stringify(err.response.data));
         }
 
+    }
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        const reader = new FileReader();
+        /*  const blob = new Blob([reader.result], { type: file.type });
+          const fileproba = new File([blob], "proba/png", { lastModified: file.lastModified });*/
+        reader.onload = () => {
+            setImage(reader.result);
+            console.log(reader.result)
+            console.log(reader.result.length)
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
 
     return (
@@ -169,8 +185,8 @@ function Register() {
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
                 <div className='div-register-img'>
-                    <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
-                    <img className='img-register' width={70} height={70} src={(image != "") ? image.split("\\").pop() : null} ></img>
+                    <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={handleImageChange} ></input>
+                    <img className='img-register' width={70} height={70} src={image} ></img>
                 </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />

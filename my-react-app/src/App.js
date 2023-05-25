@@ -9,6 +9,8 @@ import Profile from './components/Profile/Profile';
 import Articles from './components/Articles/Articles';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import ApproveVerifyUsers from './components/ApproveVerifyUsers/ApproveVerifyUsers';
+import AricleList from './components/ArticleList/ArticleList';
+import MyCart from './components/MyCart/MyCart';
 
 function App() {
   return (
@@ -23,12 +25,18 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
             <Route path='/home/articles' element={<Articles />} />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
+            <Route path='/home/article-list' element={<AricleList />} />
+          </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
             <Route path='/home/aprove-verify-users' element={<ApproveVerifyUsers />} />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
+            <Route path='/home/my-cart' element={<MyCart />} />
+          </Route>
         </Route>
       </Route>
-    </Routes>
+    </Routes >
   );
 }
 

@@ -40,6 +40,7 @@ function Login() {
                 //HA A USER SELLER AKO KI KELL MUTATNI EGY ABLAKON AZ ALAPOTAT
                 localStorage.setItem('token', token);
                 localStorage.setItem('email', email);
+                localStorage.setItem('articles', JSON.stringify([]));
                 const [header, payload, signature] = token.split('.');
                 const decodedPayload = atob(payload);
                 const payloadObj = JSON.parse(decodedPayload);

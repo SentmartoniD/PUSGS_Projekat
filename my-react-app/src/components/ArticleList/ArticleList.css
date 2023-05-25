@@ -1,0 +1,29 @@
+.article-list {
+    width: 90%;
+    height: 90%;
+    margin: 5px auto;
+    margin-top: 45px;
+    display: grid;
+    gap: 2px;
+}
+
+@media screen {
+    .article-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.button-my-cart {
+    margin-left: 1400px;
+    margin-top: 8px;
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    padding: 5px;
+    width: 300px;
+}

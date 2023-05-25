@@ -104,6 +104,21 @@ function Profile() {
         console.log("vege!")
     }
 
+    const handleImageChange = (e) => {
+        const file = image;
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setImage(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+
+        return file;
+    }
+
     return (
         <section className="section-profile">
             <h1 className='h1-register-profile' >Update your profile!</h1>

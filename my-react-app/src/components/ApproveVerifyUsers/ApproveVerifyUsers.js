@@ -28,7 +28,6 @@ function ApproveVerifyUsers() {
         try {
             const response = await UpdateUserStatus(userid, status);
             alert("Users status changed successfully!")
-            setTrigger(true);
             //KELL KULDENI EMAIL HA VERIFIED
         }
         catch (err) {

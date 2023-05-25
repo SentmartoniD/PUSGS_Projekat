@@ -27,12 +27,14 @@ namespace WebApplicationPUSGS.Models
 
         public string Password { get; set; }
 
-        //ESETLEG MARADT MEG :  - DOUBLE CASHBALANCE
-
         public Status Approved { get; set; }
 
         public Status Verified { get; set; }
 
+        //ESETLEG MARADT MEG :  - DOUBLE CASHBALANCE
+
         //MEG MEG A REFERENCAK A MASIK TIPUSU ADATOKRA
+
+        //  public List<Article> Articles { get; set; }
     }
 }
