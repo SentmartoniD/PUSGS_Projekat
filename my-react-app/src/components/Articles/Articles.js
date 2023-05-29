@@ -120,7 +120,7 @@ function Articles() {
                             articles.map((article) => (
                                 <li id={article.articleId} className="item-articles" >
                                     <div>
-                                        <label htmlFor={"name" + article.articleId} >Name : </label>
+                                        <label htmlFor={"name" + article.articleId} className="label-articles-view" >Name : </label>
                                         <input id={"name" + article.articleId} type="text" className="input-articles" defaultValue={article.name} required onChange={(e) => setNameModify(e.target.value)} ></input>
                                         <label htmlFor={"price" + article.articleId} >Price(din) : </label>
                                         <input id={"price" + article.articleId} type="number" className="input-articles" defaultValue={article.price} required onChange={(e) => setPriceModify(e.target.value)} ></input>

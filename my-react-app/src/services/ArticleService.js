@@ -10,12 +10,16 @@ const config = {
     }
 }
 
+export const GetEmail = () => {
+    return localStorage.getItem('email');
+}
+
 export const CreateArticle = async (nm, prc, quant, desc, img) => {
-    return await axios.post('https://localhost:44368/api/articles/add', { name: nm, price: prc, quantity: quant, description: desc, image: img }, config);
+    return await axios.post('https://localhost:44368/api/articles/add/' + GetEmail(), { name: nm, price: prc, quantity: quant, description: desc, image: img }, config);
 }
 
 export const GetArticles = async () => {
-    return await axios.get('https://localhost:44368/api/articles', config);
+    return await axios.get('https://localhost:44368/api/articles/get-articles-by-email/' + GetEmail(), config);
 }
 
 export const DeleteArticle = async (articleId) => {

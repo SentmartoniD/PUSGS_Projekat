@@ -8,9 +8,11 @@ namespace WebApplicationPUSGS.Interfaces
 {
     public interface IArticleService
     {
-        ArticleDto AddArticle(ArticleDto articleDto);
+        ArticleDto AddArticle(string email, ArticleDto articleDto);
 
         List<ArticleDto> GettArticles();
+
+        List<ArticleDto> GetArticlesByEmailForSeller(string email);
 
         void DeleteArticleById(int id);
 

@@ -21,12 +21,12 @@ namespace WebApplicationPUSGS.Controllers
             _articleService = articleService;
         }
 
-        [HttpPost("add")]
+        [HttpPost("add/{email}")]
         [Authorize(Roles = "seller")]
-        public ActionResult CreateArticle([FromBody] ArticleDto articleDto) {
+        public ActionResult CreateArticle(string email, [FromBody] ArticleDto articleDto) {
             try
             {
-                return Ok(_articleService.AddArticle(articleDto));
+                return Ok(_articleService.AddArticle(email , articleDto));
             }
             catch (Exception e)
             {
@@ -35,11 +35,25 @@ namespace WebApplicationPUSGS.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "seller, buyer")]
+        [Authorize(Roles = "buyer")]
         public ActionResult GetArticles() {
             try
             {
                 return Ok(_articleService.GettArticles());
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
+        }
+
+        [HttpGet("get-articles-by-email/{email}")]
+        [Authorize(Roles = "seller")]
+        public ActionResult GetArticlesByEmailForSeller(string email)
+        {
+            try
+            {
+                return Ok(_articleService.GetArticlesByEmailForSeller(email));
             }
             catch (Exception)
             {

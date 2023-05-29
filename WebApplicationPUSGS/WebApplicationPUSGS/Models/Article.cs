@@ -19,6 +19,8 @@ namespace WebApplicationPUSGS.Models
 
         public string Image { get; set; }
 
-       // public User User { get; set; }
+        public int UserSellerId { get; set; }
+
+        public User UserSeller { get; set; }
     }
 }

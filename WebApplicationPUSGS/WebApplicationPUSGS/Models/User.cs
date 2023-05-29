@@ -31,6 +31,8 @@ namespace WebApplicationPUSGS.Models
 
         public Status Verified { get; set; }
 
+        public List<Article> Articles { get; set; }
+
         //ESETLEG MARADT MEG :  - DOUBLE CASHBALANCE
 
         //MEG MEG A REFERENCAK A MASIK TIPUSU ADATOKRA

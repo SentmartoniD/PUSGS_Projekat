@@ -29,6 +29,9 @@ function Register() {
     //VALIDATION OF THE INPUTS
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
+        const api = process.env.API_URL;
+        console.log("hi")
+        console.log(api);
     }, [userName])
     useEffect(() => {
         setIsEmailValid(EMAIL_REGEX.test(email));
@@ -66,10 +69,10 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
-        const imageString = btoa(image);
+
         try {
-            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password)
-            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
+            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, image, password)
+            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, "imageString", password);
             console.log(response.data);
             alert("You have successfully registered!")
             navigateToLogin();

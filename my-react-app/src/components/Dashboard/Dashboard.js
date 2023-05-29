@@ -22,9 +22,21 @@ function Dashboard() {
                         <Link to={"/home/article-list"} className="Link" >New order</Link>
                     </li>
                     <li id="4" className="ListItem" >
+                        <>Past orders</>
+                    </li>
+                    <li id="5" className="ListItem" >
                         <Link to={"/home/aprove-verify-users"} className="Link" >Aprove/Verify users</Link>
                     </li>
-                    <li id="5" className="ListItem">
+                    <li id="6" className="ListItem" >
+                        <>New orders</>
+                    </li>
+                    <li id="7" className="ListItem" >
+                        <>My orders</>
+                    </li>
+                    <li id="8" className="ListItem" >
+                        <>All orders</>
+                    </li>
+                    <li id="9" className="ListItem">
                         <Link to={"/"} className="Link" >Sign out!</Link>
                     </li>
                 </ul>

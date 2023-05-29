@@ -7,6 +7,7 @@ using WebApplicationPUSGS.Dto;
 using WebApplicationPUSGS.Interfaces;
 using WebApplicationPUSGS.Infrastucture;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -21,9 +22,15 @@ namespace WebApplicationPUSGS.Services
             _dbContext = dbContext;
         }
 
-        public ArticleDto AddArticle(ArticleDto articleDto)
+        public ArticleDto AddArticle(string email, ArticleDto articleDto)
         {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+            
+  
+
             Article article = _mapper.Map<Article>(articleDto);
+            article.UserSellerId = user.UserId;
 
             _dbContext.Articles.Add(article);
             _dbContext.SaveChanges();
@@ -37,6 +44,13 @@ namespace WebApplicationPUSGS.Services
             _dbContext.Articles.Remove(article);
 
             _dbContext.SaveChanges();
+        }
+
+        public List<ArticleDto> GetArticlesByEmailForSeller(string email)
+        {
+            User user = _dbContext.Users.Include(u => u.Articles).FirstOrDefault(u => u.Email == email);
+
+            return _mapper.Map<List<ArticleDto>>(user.Articles);
         }
 
         public List<ArticleDto> GettArticles()

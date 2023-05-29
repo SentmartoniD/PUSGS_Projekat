@@ -20,6 +20,12 @@ namespace WebApplicationPUSGS.Infrastucture.Configurations
             builder.Property(x => x.Description).HasMaxLength(70);
 
             builder.Property(x => x.Image).HasMaxLength(70);
+
+            builder.HasOne(x => x.UserSeller) //Article ima jedan User
+                   .WithMany(x => x.Articles) //User ima vise Article
+                   .HasForeignKey(x => x.UserSellerId) //Strani ljuc je UserId
+                   .OnDelete(DeleteBehavior.Cascade); //Ako se obrise User kaskadno se brisu svi njegovi Article
+
         }
     }
 }

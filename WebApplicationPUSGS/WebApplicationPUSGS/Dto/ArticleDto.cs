@@ -18,5 +18,7 @@ namespace WebApplicationPUSGS.Dto
         public string Description { get; set; }
 
         public string Image { get; set; }
+
+        public UserDtoApprovedVerified UserSeller { get; set; }
     }
 }

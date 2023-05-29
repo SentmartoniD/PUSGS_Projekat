@@ -42,7 +42,6 @@ namespace WebApplicationPUSGS.Services
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
-
             //VISSAKULDI(AZ INFORMACIOT A FRONTNAK A UJON KESZULT HASZNALOROL) A DTUUSERREGISTRATION AHOL AZ ID 0, DE BAZISBAN NEM AZ VAN
             //ki kell hogy huzzam a bazisbol ez az uj hasznalot az id miatt
             return _mapper.Map<UserDtoRegistration>(user); 
