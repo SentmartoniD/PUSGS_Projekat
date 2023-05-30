@@ -33,10 +33,6 @@ namespace WebApplicationPUSGS.Models
 
         public List<Article> Articles { get; set; }
 
-        //ESETLEG MARADT MEG :  - DOUBLE CASHBALANCE
-
-        //MEG MEG A REFERENCAK A MASIK TIPUSU ADATOKRA
-
-        //  public List<Article> Articles { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }

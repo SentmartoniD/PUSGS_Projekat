@@ -13,6 +13,10 @@ namespace WebApplicationPUSGS.Models
 
         public string Address { get; set; }
 
-        //list tuple vagy Dictionary key=quantity, value Article
+        public string UserBuyerId { get; set; }
+
+        public User UserBuyer { get; set; }
+
+        public List<Article> Articles { get; set; }
     }
 }

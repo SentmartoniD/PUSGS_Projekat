@@ -26,14 +26,17 @@ namespace WebApplicationPUSGS.Services
         {
             User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             _dbContext.Entry(user).State = EntityState.Detached;
-            
-  
 
             Article article = _mapper.Map<Article>(articleDto);
             article.UserSellerId = user.UserId;
 
             _dbContext.Articles.Add(article);
             _dbContext.SaveChanges();
+
+
+
+
+
             return _mapper.Map<ArticleDto>(article);
         }
 
