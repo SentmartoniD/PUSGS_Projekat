@@ -33,10 +33,6 @@ namespace WebApplicationPUSGS.Services
             _dbContext.Articles.Add(article);
             _dbContext.SaveChanges();
 
-
-
-
-
             return _mapper.Map<ArticleDto>(article);
         }
 
@@ -59,6 +55,13 @@ namespace WebApplicationPUSGS.Services
         public List<ArticleDto> GettArticles()
         {
             return _mapper.Map<List<ArticleDto>>(_dbContext.Articles.ToList()); 
+        }
+
+        public List<ArticleDto> GettArticlesForCart(List<int> articleIds)
+        {
+            List<Article> Articles = _dbContext.Articles.Include(a => a.UserSeller).Where(x => articleIds.Contains(x.ArticleId)).ToList();
+
+            return _mapper.Map<List<ArticleDto>>(Articles);
         }
 
         public ArticleDto UpdateArticle(ArticleDto articleDto)

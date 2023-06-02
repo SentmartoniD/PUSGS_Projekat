@@ -22,7 +22,5 @@ namespace WebApplicationPUSGS.Models
         public int UserSellerId { get; set; }
 
         public User UserSeller { get; set; }
-
-        public List<Order> Orders { get; set; }
     }
 }

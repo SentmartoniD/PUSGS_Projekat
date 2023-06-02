@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import ApproveVerifyUsers from './components/ApproveVerifyUsers/ApproveVerifyUsers';
 import AricleList from './components/ArticleList/ArticleList';
 import MyCart from './components/MyCart/MyCart';
+import AllOrders from './components/AllOrders/AllOrders';
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
             <Route path='/home/my-cart' element={<MyCart />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
+            <Route path='/home/all-orders' element={<AllOrders />} />
           </Route>
         </Route>
       </Route>

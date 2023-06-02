@@ -16,6 +16,7 @@ namespace WebApplicationPUSGS.Mapping
             CreateMap<User, UserDtoLogin>().ReverseMap();
             CreateMap<User, UserDtoApprovedVerified>().ReverseMap();
             CreateMap<Article, ArticleDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap();
         }
     }
 }

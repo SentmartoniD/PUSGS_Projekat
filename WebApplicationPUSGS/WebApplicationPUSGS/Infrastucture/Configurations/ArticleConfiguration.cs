@@ -25,7 +25,6 @@ namespace WebApplicationPUSGS.Infrastucture.Configurations
                    .WithMany(x => x.Articles) //User ima vise Article
                    .HasForeignKey(x => x.UserSellerId) //Strani ljuc je UserId
                    .OnDelete(DeleteBehavior.Cascade); //Ako se obrise User kaskadno se brisu svi njegovi Article
-
         }
     }
 }

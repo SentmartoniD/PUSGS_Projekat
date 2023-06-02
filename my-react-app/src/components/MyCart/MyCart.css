@@ -28,3 +28,33 @@
     margin-right: 30px;
     width: 15%;
 }
+
+.section-mycart {
+    align-items: center;
+}
+
+.ul-items-mycart {
+    list-style-type: none;
+    margin-right: 35px;
+    width: 23%;
+    margin-left: 525px;
+}
+
+.item-mycart {
+    /* display: flex;
+    justify-content: flex-start;*/
+    /*align-items: center;*/
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.25rem 0;
+    /*background-color: grey;*/
+}
+
+.article-mycart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    padding: 5px;
+    width: 300px;
+}

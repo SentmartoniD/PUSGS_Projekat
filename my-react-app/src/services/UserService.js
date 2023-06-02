@@ -38,9 +38,11 @@ export const GetToken = () => {
     return localStorage.getItem('token');
 }
 
-const config = {
-    headers: {
-        "Authorization": `Bearer ${GetToken()}`
+export const GetConfig = () => {
+    return {
+        headers: {
+            "Authorization": `Bearer ${GetToken()}`
+        }
     }
 }
 
@@ -49,22 +51,22 @@ export const GetEmail = () => {
 }
 
 export const GetRegisteredUser = async () => {
-    return await axios.get('https://localhost:44368/api/users/get-user-by-email/' + GetEmail(), config);
+    return await axios.get('https://localhost:44368/api/users/get-user-by-email/' + GetEmail(), GetConfig());
 }
 
 export const UpdateUser = async (id, usrnm, eml, fnm, lnm, dtb, addr, typU, img, pwd) => {
     return await axios.put('https://localhost:44368/api/users/update/' + id, {
         userid: id, username: usrnm, email: eml, firstname: fnm, lastname: lnm,
         dateofbirth: dtb, address: addr, usertype: typU, image: img, password: pwd
-    }, config
+    }, GetConfig()
     );
 }
 
 export const GetUsers = async () => {
-    return await axios.get('https://localhost:44368/api/users/get-all', config);
+    return await axios.get('https://localhost:44368/api/users/get-all', GetConfig());
 }
 
 export const UpdateUserStatus = async (id, status) => {
-    return await axios.post('https://localhost:44368/api/users/update-status', { userid: id, status: status }, config);
+    return await axios.post('https://localhost:44368/api/users/update-status', { userid: id, status: status }, GetConfig());
 }
 

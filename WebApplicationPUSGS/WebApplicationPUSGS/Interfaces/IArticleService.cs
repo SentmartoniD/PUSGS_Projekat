@@ -17,5 +17,7 @@ namespace WebApplicationPUSGS.Interfaces
         void DeleteArticleById(int id);
 
         ArticleDto UpdateArticle(ArticleDto articleDto);
+
+        List<ArticleDto> GettArticlesForCart(List<int> articleIds);
     }
 }

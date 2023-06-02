@@ -22,10 +22,21 @@ namespace WebApplicationPUSGS.Infrastucture.Configurations
             builder.HasOne(x => x.UserBuyer) //Order ima jedan User
                    .WithMany(x => x.Orders) //User ima vise Order
                    .HasForeignKey(x => x.UserBuyerId) //Strani ljuc je UserId
-                   .OnDelete(DeleteBehavior.Cascade); //Ako se obrise User kaskadno se brisu svi njegovi Order
+                   .OnDelete(DeleteBehavior.Cascade); //Ako se obrise User kaskadno se brisu svi njegovi Orderr
 
-            builder.HasMany(x => x.Articles) //Order ima vise Article
-                   .WithMany(x => x.Orders);//Article ima vise Order
+            builder.Property(e => e.ArticleIds)
+                   .HasConversion(
+                        v => string.Join(',', v),
+                        v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                            .Select(int.Parse)
+                            .ToList());
+
+            builder.Property(e => e.AmountOfArticles)
+                    .HasConversion(
+                        v => string.Join(',', v),
+                        v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                            .Select(int.Parse)
+                            .ToList());
         }
     }
 }

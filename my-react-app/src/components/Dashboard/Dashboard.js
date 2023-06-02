@@ -5,6 +5,7 @@ import "../ApproveVerifyUsers/ApproveVerifyUsers.css";
 import "../Articles/Articles.css"
 import "../ArticleList/ArticleList.css"
 import "../MyCart/MyCart.css"
+import "../AllOrders/AllOrders.css"
 
 function Dashboard() {
 
@@ -34,7 +35,7 @@ function Dashboard() {
                         <>My orders</>
                     </li>
                     <li id="8" className="ListItem" >
-                        <>All orders</>
+                        <Link to={'/home/all-orders'} className="Link">All orders</Link>
                     </li>
                     <li id="9" className="ListItem">
                         <Link to={"/"} className="Link" >Sign out!</Link>

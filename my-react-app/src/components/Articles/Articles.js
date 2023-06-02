@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CreateArticle, GetArticles, DeleteArticle, UpdateArticle } from "../../services/ArticleService";
+import { CreateArticle, GetArticlesByEmail, DeleteArticle, UpdateArticle } from "../../services/ArticleService";
 
 
 function Articles() {
@@ -14,7 +14,7 @@ function Articles() {
     useEffect(() => {
         const GetAllArticles = async () => {
             try {
-                const resp = await GetArticles();
+                const resp = await GetArticlesByEmail();
                 setArticles(resp.data);
                 console.log(resp.data);
             }

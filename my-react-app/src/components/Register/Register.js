@@ -29,9 +29,9 @@ function Register() {
     //VALIDATION OF THE INPUTS
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
-        const api = process.env.API_URL;
-        console.log("hi")
-        console.log(api);
+        /* const api = `${process.env.API_URL}`;
+         console.log("hi")
+         console.log(api);*/
     }, [userName])
     useEffect(() => {
         setIsEmailValid(EMAIL_REGEX.test(email));

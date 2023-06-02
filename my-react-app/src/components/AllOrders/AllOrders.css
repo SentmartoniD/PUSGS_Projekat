@@ -1,0 +1,22 @@
+.section-allorders {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ul-items-allorders {
+    list-style-type: none;
+    margin-right: 35px;
+    width: 23%;
+    margin-left: 525px;
+}
+
+.item-allorders {
+    /* display: flex;
+    justify-content: flex-start;*/
+    align-items: center;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.25rem 0;
+    background-color: grey;
+}

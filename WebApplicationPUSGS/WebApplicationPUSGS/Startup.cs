@@ -107,6 +107,7 @@ namespace WebApplicationPUSGS
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IArticleService, ArticleServis>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddDbContext<PUSGSWebAppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PUSGSWebAppDatabase2")));
 

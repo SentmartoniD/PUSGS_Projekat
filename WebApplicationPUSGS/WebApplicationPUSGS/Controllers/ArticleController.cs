@@ -61,6 +61,20 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
+        [HttpPost("get-articles-for-cart")]
+        [Authorize(Roles = "buyer")]
+        public ActionResult GetArticlesByEmailForSeller([FromBody] List<int> articles)
+        {
+            try
+            {
+                return Ok(_articleService.GettArticlesForCart(articles));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
+        }
+
         [HttpDelete("delete/{id}")]
         [Authorize(Roles = "seller")]
         public ActionResult DeleteArticle(int id) {
