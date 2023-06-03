@@ -35,8 +35,14 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
             <Route path='/home/my-cart' element={<MyCart />} />
           </Route>
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+            <Route path='/home/new-orders' element={<AllOrders userType="seller-new" />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+            <Route path='/home/my-orders' element={<AllOrders userType="seller-my" />} />
+          </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
-            <Route path='/home/all-orders' element={<AllOrders />} />
+            <Route path='/home/all-orders' element={<AllOrders userType="admin" />} />
           </Route>
         </Route>
       </Route>

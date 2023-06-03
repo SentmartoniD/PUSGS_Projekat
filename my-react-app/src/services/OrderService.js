@@ -20,6 +20,18 @@ export const CreateOrder = async (cmnt, addr, prc, ids, amounts) => {
     return await axios.post('https://localhost:44368/api/orders/' + GetEmail(), { comment: cmnt, address: addr, price: prc, articleIds: ids, amountOfArticles: amounts }, GetConfig());
 }
 
-export const GetAllOrders = async () => {
+export const GetAllOrdersForAdmin = async () => {
     return await axios.get('https://localhost:44368/api/orders', GetConfig());
+}
+
+export const GetAllOrdersForBuyer = async () => {
+    return await axios.get('https://localhost:44368/api/orders/all-orders-for-buyer/' + GetEmail(), GetConfig());
+}
+
+export const GetAllCurrentOrdersForSeller = async () => {
+    return await axios.get('https://localhost:44368/api/orders/all-current-orders-for-seller/' + GetEmail(), GetConfig());
+}
+
+export const GetAllPastOrdersForSeller = async () => {
+    return await axios.get('https://localhost:44368/api/orders/all-past-orders-for-seller/' + GetEmail(), GetConfig());
 }

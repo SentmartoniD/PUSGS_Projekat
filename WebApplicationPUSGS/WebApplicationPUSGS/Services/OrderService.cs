@@ -9,7 +9,7 @@ using WebApplicationPUSGS.Infrastucture;
 using AutoMapper;
 using WebApplicationPUSGS.Dto;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -50,6 +50,145 @@ namespace WebApplicationPUSGS.Services
         public List<OrderDto> GetAllOrders()
         {
             return _mapper.Map<List<OrderDto>>(_dbContext.Orders.ToList());
+        }
+
+        public List<OrderDto> GetAllOrdersForBuyer(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
+
+            return _mapper.Map<List<OrderDto>>(orders);
+        }
+
+        public List<OrderDto> GetAllCurrentOrdersForSeller(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            List<Order> orders = _dbContext.Orders.ToList();
+
+            List<Article> articles = _dbContext.Articles.Where(x => x.UserSellerId == user.UserId).ToList();
+
+            List<Order> ordersForSeller = new List<Order>();
+
+            Order tempOrder = new Order();
+
+            foreach (Order o in orders) {
+
+                if (o.DateOfOrder == "canceled")
+                    continue;
+                TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
+                if (timeDifference.TotalMinutes >= 4)
+                    continue;
+
+                string jsonString = JsonSerializer.Serialize(o);
+                tempOrder = JsonSerializer.Deserialize<Order>(jsonString);
+
+                tempOrder.ArticleIds = new List<int>();
+                for (int i = 0; i < o.ArticleIds.Count; i++) {
+                    foreach (Article a in articles) {
+                        if (o.ArticleIds.ToList()[i] == a.ArticleId)
+                        {
+                            tempOrder.ArticleIds.Add(a.ArticleId);
+                            break;
+                        }
+                    }
+                }
+                ordersForSeller.Add(tempOrder);
+            }
+
+
+            return _mapper.Map<List<OrderDto>>(ordersForSeller);
+        }
+
+        public List<OrderDto> GetAllPastOrdersForSeller(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            List<Order> orders = _dbContext.Orders.ToList();
+
+            List<Article> articles = _dbContext.Articles.Where(x => x.UserSellerId == user.UserId).ToList();
+
+            List<Order> ordersForSeller = new List<Order>();
+
+            Order tempOrder = new Order();
+
+            foreach (Order o in orders)
+            {
+                if (o.DateOfOrder != "canceled")
+                {
+                    TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
+                    if (timeDifference.TotalMinutes < 4)
+                        continue;
+                }
+
+                string jsonString = JsonSerializer.Serialize(o);
+                tempOrder = JsonSerializer.Deserialize<Order>(jsonString);
+
+                tempOrder.ArticleIds = new List<int>();
+                for (int i = 0; i < o.ArticleIds.Count; i++)
+                {
+                    foreach (Article a in articles)
+                    {
+                        if (o.ArticleIds.ToList()[i] == a.ArticleId)
+                        {
+                            tempOrder.ArticleIds.Add(a.ArticleId);
+                            break;
+                        }
+                    }
+                }
+                ordersForSeller.Add(tempOrder);
+            }
+
+
+            return _mapper.Map<List<OrderDto>>(ordersForSeller);
+        }
+
+        public List<OrderDto> GetAllCurrentOrdersForBuyer(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
+            List<Order> currentOrders = new List<Order>();
+
+            foreach(Order o in orders)
+            {
+                if (o.DateOfOrder != "canceled")
+                {
+                    TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
+                    if (timeDifference.TotalMinutes < 4)
+                        currentOrders.Add(o);
+                }
+            }
+
+            return _mapper.Map<List<OrderDto>>(currentOrders);
+        }
+
+        public List<OrderDto> GetAllPastOrdersForBuyer(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
+            List<Order> pastOrders = new List<Order>();
+
+            foreach (Order o in orders)
+            {
+                if (o.DateOfOrder != "canceled")
+                {
+                    TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
+                    if (timeDifference.TotalMinutes >= 4)
+                        pastOrders.Add(o);
+                }
+                else
+                    pastOrders.Add(o);
+            }
+
+            return _mapper.Map<List<OrderDto>>(pastOrders);
         }
     }
 }

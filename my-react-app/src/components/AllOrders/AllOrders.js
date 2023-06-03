@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetAllOrders } from "../../services/OrderService";
+import { GetAllOrdersForAdmin, GetAllCurrentOrdersForSeller, GetAllPastOrdersForSeller } from "../../services/OrderService";
 
 
 
-const AllOrders = () => {
+const Orders = (props) => {
 
     const [orders, setOrders] = useState([]);
 
@@ -16,9 +16,22 @@ const AllOrders = () => {
     useEffect(() => {
         const GetOrders = async () => {
             try {
-                const resp = await GetAllOrders();
-                console.log(resp.data);
-                setOrders(resp.data);
+                //const resp = null;
+                if (props.userType == "admin") {
+                    const resp = await GetAllOrdersForAdmin();
+                    console.log(resp.data);
+                    setOrders(resp.data);
+                }
+                else if (props.userType == "seller-new") {
+                    const resp = await GetAllCurrentOrdersForSeller();
+                    console.log(resp.data);
+                    setOrders(resp.data);
+                }
+                else if (props.userType == "seller-my") {
+                    const resp = await GetAllPastOrdersForSeller();
+                    console.log(resp.data);
+                    setOrders(resp.data);
+                }
             }
             catch (err) {
                 if (!err?.response)
@@ -28,7 +41,7 @@ const AllOrders = () => {
             }
         }
         GetOrders();
-    }, [])
+    }, [props.userType])
 
 
     return (
@@ -42,14 +55,16 @@ const AllOrders = () => {
                                 <label>Adrress : {order.address}</label>
                                 <label>Comment : {order.comment}</label>
                                 <label>Price : {order.price}</label>
-                                <label>Delivery state : { }</label>
+                                {props.userType === "admin" ? <label>Delivery state : { }</label> : <></>}
+                                {props.userType === "seller-new" ? <label>Countdown : { }</label> : <></>}
                                 <button>Details</button>
                             </li>
                         ))}
                     </ul>
+
             }
         </section>
     )
 }
 
-export default AllOrders;
+export default Orders;

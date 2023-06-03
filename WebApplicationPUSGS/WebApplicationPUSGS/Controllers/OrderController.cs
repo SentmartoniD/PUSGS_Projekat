@@ -47,5 +47,46 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
+        [HttpGet("all-orders-for-buyer/{email}")]
+        [Authorize(Roles = "buyer")]
+        public ActionResult GetAllOrderForBuyer(string email) {
+            try
+            {
+                return Ok(_orderService.GetAllOrdersForBuyer(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("all-past-orders-for-seller/{email}")]
+        [Authorize(Roles = "seller")]
+        public ActionResult GetAllPastOrderForSeller(string email)
+        {
+            try
+            {
+                return Ok(_orderService.GetAllPastOrdersForSeller(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("all-current-orders-for-seller/{email}")]
+        [Authorize(Roles = "seller")]
+        public ActionResult GetAllCurrentOrderForSeller(string email)
+        {
+            try
+            {
+                return Ok(_orderService.GetAllCurrentOrdersForSeller(email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }
