@@ -17,17 +17,17 @@ const Orders = (props) => {
         const GetOrders = async () => {
             try {
                 //const resp = null;
-                if (props.userType == "admin") {
+                if (props.userType === "admin") {
                     const resp = await GetAllOrdersForAdmin();
                     console.log(resp.data);
                     setOrders(resp.data);
                 }
-                else if (props.userType == "seller-new") {
+                else if (props.userType === "seller-new") {
                     const resp = await GetAllCurrentOrdersForSeller();
                     console.log(resp.data);
                     setOrders(resp.data);
                 }
-                else if (props.userType == "seller-my") {
+                else if (props.userType === "seller-my") {
                     const resp = await GetAllPastOrdersForSeller();
                     console.log(resp.data);
                     setOrders(resp.data);

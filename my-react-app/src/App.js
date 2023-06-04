@@ -20,10 +20,10 @@ function App() {
       <Route path='/register' element={<Register />} />
       <Route element={<ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} />} >
         <Route path='/home' element={<Dashboard />}>
-          <Route element={< ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} />} >
+          <Route element={< ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} type="profile" />} >
             <Route path='/home/profile' element={<Profile />} />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} type="articles" />} >
             <Route path='/home/articles' element={<Articles />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
@@ -35,10 +35,10 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
             <Route path='/home/my-cart' element={<MyCart />} />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} type="new" />} >
             <Route path='/home/new-orders' element={<AllOrders userType="seller-new" />} />
           </Route>
-          <Route element={<ProtectedRoute allowedRoles={["seller"]} />} >
+          <Route element={<ProtectedRoute allowedRoles={["seller"]} type="my" />} >
             <Route path='/home/my-orders' element={<AllOrders userType="seller-my" />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >

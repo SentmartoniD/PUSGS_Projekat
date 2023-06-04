@@ -45,6 +45,7 @@ function Login() {
                 const decodedPayload = atob(payload);
                 const payloadObj = JSON.parse(decodedPayload);
                 console.log(payloadObj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
+                console.log(payloadObj["verified"]);
 
                 navigateToHome();
             } catch (err) {

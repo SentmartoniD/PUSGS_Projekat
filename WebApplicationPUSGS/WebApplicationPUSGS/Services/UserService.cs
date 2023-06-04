@@ -56,6 +56,10 @@ namespace WebApplicationPUSGS.Services
             query = query.Where(e => e.Email.Contains(userDto.Email));
             User user = query.ToList<User>()[0];
 
+            bool verified = false;
+            if (user.Verified == Status.YES)
+                verified = true;
+
             //if (BCrypt.Net.BCrypt.Verify(userDto.Password, user.Password, false, BCrypt.Net.HashType.SHA256 ))//Uporedjujemo hes pasvorda iz baze i unetog pasvorda
             if(GetHashValueInString(userDto.Password) == user.Password)
             {
@@ -73,7 +77,7 @@ namespace WebApplicationPUSGS.Services
                 if (user.UserType == "seller")
                     claims.Add(new Claim(ClaimTypes.Role, "seller")); //Add user type to claim
                 //mozemo izmisliti i mi neki nas claim
-                //claims.Add(new Claim("Neki_moj_claim", "imam_ga"));
+                claims.Add(new Claim("verified", verified.ToString()));
 
                 //Kreiramo kredencijale za potpisivanje tokena. Token mora biti potpisan privatnim kljucem
                 //kako bi se sprecile njegove neovlascene izmene
