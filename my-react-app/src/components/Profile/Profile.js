@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GetRegisteredUser, UpdateUser } from "../../services/UserService";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import emailjs from "@emailjs/browser"
 
 const USERNAME_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,20}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.[a-zA-Z]{1,20}$/;
@@ -31,8 +32,6 @@ function Profile() {
                 console.log("this is the response");
                 console.log(resp);
                 setUser(resp.data);
-                console.log(atob(resp.data.image));
-                console.log(resp.data.userType);
             }
             catch (err) {
                 if (!err?.response)
@@ -42,6 +41,17 @@ function Profile() {
             }
         }
         getUser();
+        const data = {
+            user_name: 'Deni',
+            user_email: 'denessentmartoni@gmail.com',
+            message: 'valami mas!',
+        };
+        emailjs.send('service_jsr3vhk', 'template_u2q27tw', data, 's8B1zFuerOqESsscI')
+            .then((result) => {
+                console.log(result.text);
+            }, (error) => {
+                console.log(error.text);
+            })
     }, [trigger]);
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
@@ -122,6 +132,7 @@ function Profile() {
     return (
         <section className="section-profile">
             <h1 className='h1-register-profile' >Update your profile!</h1>
+            <h5 className='h1-register-profile' >Your state of verification is {user.verified === 2 ? "DENIED!" : user.verified === 1 ? "IN PORGRESS!" : "VERIFIED"}</h5>
             <form className="form-control-1-register-input" >
                 <label htmlFor='username' >Username :
                     <FontAwesomeIcon icon={faCheck} className={isUserNameValid ? "valid" : "hide"} />

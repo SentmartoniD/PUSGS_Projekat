@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace WebApplicationPUSGS.Dto
 {
-    public class UserDtoRegistration
+    public class PeldaDto
     {
-        public int UserId { get; set; }//KELL IT HOGY LEGYEN AZ ID ????????????????????
-
         public string Username { get; set; }
 
         public string Email { get; set; }
@@ -23,8 +20,6 @@ namespace WebApplicationPUSGS.Dto
         public string Address { get; set; }
 
         public string UserType { get; set; }
-
-        public string Image { get; set; }
 
         public string Password { get; set; }
     }

@@ -22,17 +22,26 @@ export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, p
     );
 }*/
 
-export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, pwd) => {
+export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, pwd) => {
     return await axios.post('https://localhost:44368/api/users/registration', {
         username: usrnm, email: eml, firstname: fnm, lastname: lnm,
-        dateofbirth: dtb, address: addr, usertype: typU, image: img, password: pwd
-    },/*
-        {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        }*/
+        dateofbirth: dtb, address: addr, usertype: typU, password: pwd
+    },
     );
 }
+/*
+export const RegisterUser = async (usrnm, eml, fnm, lnm, dtb, addr, typU, img, pwd) => {
+    const data = { username: usrnm, email: eml, firstname: fnm, lastname: lnm, dateofbirth: dtb, address: addr, usertype: typU, password: pwd }
+    const formData = new FormData();
+    formData.append('image', img);
+    formData.append('userData', JSON.stringify(data));
+    return await axios.post('https://localhost:44368/api/users/registration', formData,
+
+        {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }
+    );
+}*/
 
 export const GetToken = () => {
     return localStorage.getItem('token');

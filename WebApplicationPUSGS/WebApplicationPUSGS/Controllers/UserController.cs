@@ -39,6 +39,25 @@ namespace WebApplicationPUSGS.Controllers
             }
 
         }
+        /*
+        [HttpPost("registration")]
+        public ActionResult AddImage(IFormFile image, [FromForm(Name ="userData")] PeldaDto userDto)
+        {
+            try
+            {
+                return Ok();//_userService.AddUser(userDto)
+            }
+            catch (Exception e)
+            {
+                if (e.Message == "Email already in use!")
+                    return StatusCode(StatusCodes.Status409Conflict, "Email already in use!");
+                else if (e.Message == "Username already in use!")
+                    return StatusCode(StatusCodes.Status409Conflict, "Username already in use!");
+                else
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+            }
+
+        }*/
 
         [HttpPost("login")]
         public IActionResult LoginUser([FromBody] UserDtoLogin userdto) {

@@ -72,10 +72,8 @@ function Register() {
         //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
 
         try {
-            const formData = new FormData();
-            formData.append('file', file)
-            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, formData, password)
-            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, "formData", password);
+            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, file, password)
+            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, password);
             console.log(response.data);
             alert("You have successfully registered!")
             navigateToLogin();

@@ -135,12 +135,12 @@ namespace WebApplicationPUSGS.Services
             return hashString;
         }
 
-        public UserDtoRegistration GetUserByEmail(string email)
+        public UserDtoApprovedVerified GetUserByEmail(string email)
         {
             IQueryable<User> query = _dbContext.Users;
             query = query.Where(e => e.Email.Contains(email));
             User user = query.ToList<User>()[0];
-            return _mapper.Map<UserDtoRegistration>(user);
+            return _mapper.Map<UserDtoApprovedVerified>(user);
         }
 
         public UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration)

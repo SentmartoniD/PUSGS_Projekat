@@ -76,7 +76,7 @@ namespace WebApplicationPUSGS.Services
                 article.Description = articleDto.Description;
             if (articleDto.Quantity != 0)
                 article.Quantity = articleDto.Quantity;
-            if (articleDto.Image != null && articleDto.Image != string.Empty)
+            if (articleDto.Image != null)
                 article.Image = articleDto.Image;
 
             _dbContext.SaveChanges();

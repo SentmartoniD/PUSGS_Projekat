@@ -31,8 +31,6 @@ namespace WebApplicationPUSGS.Infrastucture.Configurations
 
             builder.Property(x => x.UserType).HasMaxLength(10);
 
-            builder.Property(x => x.Image).HasMaxLength(70);
-
             builder.Property(x => x.Password).HasMaxLength(70);
 
             builder.Property(x => x.Approved).HasDefaultValue(Status.UNDEFINED);
