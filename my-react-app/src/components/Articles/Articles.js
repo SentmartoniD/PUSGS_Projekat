@@ -8,6 +8,7 @@ function Articles() {
     const [quantity, setQuantity] = useState(0); const [quantityModify, setQuantityModify] = useState(0);
     const [description, setDescription] = useState(""); const [descriptionModify, setDescriptionModify] = useState("");
     const [image, setImage] = useState(""); const [imageModify, setImageModify] = useState("");
+    const [file, setFile] = useState();
     const [trigger, setTrigger] = useState(0);
     const [articles, setArticles] = useState([]);
 
@@ -30,8 +31,9 @@ function Articles() {
 
     const handleAddArticle = async () => {
         //A KEP MUSAJ HOGY PNG LEGYEN VAGY ESETLEG JPEG, ES NEM SZABAD HOGY TUL NAGY LEGYEN
+        if (name === "" || price === 0 || quantity === 0 || description === "" || image === "")
+            return;
         try {
-            //const imageString = btoa(image);
             const resp = await CreateArticle(name, price, quantity, description, "imageString");
             console.log(resp.data);
             alert("Successfully added the article!")
@@ -81,17 +83,10 @@ function Articles() {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            setImage(reader.result);
-            console.log(reader.result)
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        setFile(file);
+        setImage(URL.createObjectURL(file));
     }
+
 
     return (
         <section className="container-articles" >

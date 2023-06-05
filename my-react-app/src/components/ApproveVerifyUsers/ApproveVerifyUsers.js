@@ -1,7 +1,7 @@
 import { GetUsers } from "../../services/UserService";
 import { useState, useEffect } from "react";
 import { UpdateUserStatus } from "../../services/UserService";
-import emailjs from "@emailjs/browser"
+import { SendEmail } from "../../services/EmailService";
 
 function ApproveVerifyUsers() {
     const [users, setUsers] = useState([]);
@@ -30,31 +30,10 @@ function ApproveVerifyUsers() {
             const response = await UpdateUserStatus(userid, status);
             alert("Users status changed successfully!")
             if (status === "verify") {
-                const emailData = {
-                    service_id: 'YOUR_SERVICE_ID',
-                    template_id: 'YOUR_TEMPLATE_ID',
-                    user_id: 'YOUR_USER_ID',
-                    template_params: {
-                        to_email: 'example@gmail.com',
-                        subject: 'Hello from React',
-                        message: 'This is the email message.',
-                    },
-                    access_token: 'YOUR_ACCESS_TOKEN',
-                };
-
+                await SendEmail('Your account has been verified!');
             }
             else if (status === "unverify") {
-                const data = {
-                    user_name: 'Deni',
-                    user_email: 'denessentmartoni@gmail.com',
-                    message: 'Your verification has been denied!',
-                };
-                emailjs.send('service_jsr3vhk', 'template_u2q27tw', data, 's8B1zFuerOqESsscI')
-                    .then((result) => {
-                        console.log(result.text);
-                    }, (error) => {
-                        console.log(error.text);
-                    })
+                await SendEmail("Your verification has been denied!")
             }
 
         }

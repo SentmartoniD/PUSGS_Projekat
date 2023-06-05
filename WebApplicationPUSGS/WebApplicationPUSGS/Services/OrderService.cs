@@ -163,5 +163,22 @@ namespace WebApplicationPUSGS.Services
 
             return new Tuple<List<OrderDto>, List<OrderDto>>(currentOrdersDto, pasttOrdersDto);
         }
+
+        public void DeleteOrder(int id)
+        {
+            Order order = _dbContext.Orders.FirstOrDefault(X => X.OrderId == id);
+            _dbContext.Entry(order).State = EntityState.Detached;
+
+            Article tempArticle = new Article();
+
+            for (int i = 0; i < order.ArticleIds.Count; i++) {
+                tempArticle = _dbContext.Articles.FirstOrDefault(x => x.ArticleId == order.ArticleIds.ToList()[i]);
+                tempArticle.Quantity = tempArticle.Quantity + order.AmountOfArticles.ToList()[i];
+                _dbContext.SaveChanges();
+            }
+
+            _dbContext.Orders.Remove(order);
+
+        }
     }
 }

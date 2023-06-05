@@ -11,7 +11,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?]).{8,20}$/;
 const FIRSTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const LASTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
-const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z]{3,15},[ ]?[A-Z][a-zA-Z]{3,15}[ ][0-9]{1,4}$/;
+const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z ]{3,15},[ ]?[A-Z][a-zA-Z ]{3,15}[ ][0-9]{1,4}$/;
 
 function Register() {
     //USESTATES FOR THE INPUT FIELDS
@@ -163,7 +163,7 @@ function Register() {
                 <p id='addrnode' className={isAddressFocus && address && !isAddressValid ? "instructions" : "offscreen"}  >
                     <FontAwesomeIcon icon={faInfoCircle} />
                     Must start with the name of the country, then city and street!<br />
-                    Example : Serbia, NoviSad, Telepska 2!
+                    Example : Serbia, Novi Sad, Telepska 2!
                 </p>
                 <label htmlFor='type' >Type of user :
                     <FontAwesomeIcon icon={faCheck} className={isUserTypeValid ? "valid" : "hide"} />
@@ -173,7 +173,7 @@ function Register() {
                     <option value="buyer">Buyer</option>
                     <option value="seller">Seller</option>
                 </select>
-                <label htmlFor='file' >Image :
+                <label htmlFor='file' >Image(png) :
                     <FontAwesomeIcon icon={faCheck} className={isImageValid ? "valid" : "hide"} />
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>

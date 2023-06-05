@@ -42,8 +42,9 @@ function MyCart() {
                 const mnt = document.getElementById(article.articleId + "amount").value;
                 amounts.push(mnt);
                 //setPrice((prevPrice) => prevPrice + (mnt * article.price) + DELIVERY_PRICE);
-                plsprice = plsprice + (mnt * article.price) + DELIVERY_PRICE;
+                plsprice = plsprice + (mnt * article.price);
             });
+            plsprice = plsprice + getDeliverPrice();
             const resp = await CreateOrder(comment, address, plsprice, ids, amounts);
             alert("Successfully made the order!")
             localStorage.setItem("articles", JSON.stringify([]));
@@ -75,6 +76,16 @@ function MyCart() {
         GetAllArticles();
     }, [])
 
+    const getDeliverPrice = () => {
+        const array = [];
+        if (articles.length != 0) {
+            articles.map((article) => (
+                array.includes(article.userSeller.userId) ? null : array.push(article.userSeller.userId)
+            ))
+        }
+        return array.length * DELIVERY_PRICE;
+    }
+
     return (
         <section className="section-mycart" >
             {
@@ -92,7 +103,7 @@ function MyCart() {
                                         <label>Seller username : {article.userSeller.username}</label>
                                         <label>Seller email : {article.userSeller.email}</label>
                                         <div>
-                                            <label>Amount</label>
+                                            <label>Quantity</label>
                                             <input id={article.articleId + "amount"} type="number" min={1} defaultValue={1} step={1} max={article.quantity}></input>
                                         </div>
                                     </article>

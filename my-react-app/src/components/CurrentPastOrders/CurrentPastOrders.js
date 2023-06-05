@@ -33,7 +33,6 @@ const CurrentPastOrders = () => {
         date.setMinutes(date.getMinutes() + 4);
         const currentTime = new Date();
         return Math.floor((date - currentTime) / (1000 * 60));
-        //return 20;
     };
 
     return (
@@ -48,7 +47,7 @@ const CurrentPastOrders = () => {
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
-                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} />
+                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} id={order.orderId} />
                                 </li>
                             ))}
                         </ul>

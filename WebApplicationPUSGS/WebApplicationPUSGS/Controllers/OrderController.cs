@@ -89,5 +89,19 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
+        [HttpGet("cancel-order/{id}")]
+        [Authorize(Roles = "buyer")]
+        public ActionResult CancelOrder(int id) {
+            try
+            {
+                _orderService.DeleteOrder(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }

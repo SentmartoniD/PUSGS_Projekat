@@ -8,7 +8,7 @@ const USERNAME_REGEX = /^[a-zA-z][a-zA-Z0-9-_]{3,20}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]{1,20}@[a-zA-Z0-9-]{1,20}\.[a-zA-Z]{1,20}$/;
 const FIRSTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const LASTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
-const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z]{3,15},[ ]?[A-Z][a-zA-Z]{3,15}[ ][0-9]{1,4}$/;
+const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{3,15},[ ]?[A-Z][a-zA-Z ]{3,15},[ ]?[A-Z][a-zA-Z ]{3,15}[ ][0-9]{1,4}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%?]).{8,20}$/;
 
 function Profile() {
@@ -41,17 +41,6 @@ function Profile() {
             }
         }
         getUser();
-        const data = {
-            user_name: 'Deni',
-            user_email: 'denessentmartoni@gmail.com',
-            message: 'valami mas!',
-        };
-        emailjs.send('service_jsr3vhk', 'template_u2q27tw', data, 's8B1zFuerOqESsscI')
-            .then((result) => {
-                console.log(result.text);
-            }, (error) => {
-                console.log(error.text);
-            })
     }, [trigger]);
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
@@ -210,7 +199,7 @@ function Profile() {
                     <option value='buyer'>Buyer</option>
                     <option value="seller">Seller</option>
                 </select>
-                <label htmlFor='file' >Image :
+                <label htmlFor='file' >Image(png) :
                     <FontAwesomeIcon icon={faCheck} className={isImageValid ? "valid" : "hide"} />
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
