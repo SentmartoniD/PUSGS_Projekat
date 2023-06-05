@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import { GetAllOrdersForBuyer } from "../../services/OrderService";
+import CountdownTimer from "../CountdownTimer";
 
 
 
@@ -11,9 +12,10 @@ const CurrentPastOrders = () => {
     useEffect(() => {
         const GetOrders = async () => {
             try {
-                const resp = await GetAllOrders();
+                const resp = await GetAllOrdersForBuyer();
                 console.log(resp.data);
-                setOrders(resp.data);
+                setCurrentOrders(resp.data["item1"]);
+                setPastOrders(resp.data["item2"]);
             }
             catch (err) {
                 if (!err?.response)
@@ -26,6 +28,14 @@ const CurrentPastOrders = () => {
 
     }, [])
 
+    const getTime = (dateOfOrder) => {
+        const date = new Date(dateOfOrder);
+        date.setMinutes(date.getMinutes() + 4);
+        const currentTime = new Date();
+        return Math.floor((date - currentTime) / (1000 * 60));
+        //return 20;
+    };
+
     return (
         <section className="continaer-cpo" >
             <div className="box-cpo" >
@@ -33,15 +43,12 @@ const CurrentPastOrders = () => {
                 {
                     currentOrders.length === 0 ? <></> :
                         <ul >
-                            {orders.map((order) => (
+                            {currentOrders.map((order) => (
                                 <li id={order.orderId}  >
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
-                                    {
-                                        storedDateTime = new Date(dateTimeStringFromServer)
-s
-                                    }
+                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} />
                                 </li>
                             ))}
                         </ul>
@@ -53,11 +60,12 @@ s
                 {
                     pastOrders.length === 0 ? <></> :
                         <ul >
-                            {orders.map((order) => (
+                            {pastOrders.map((order) => (
                                 <li id={order.orderId}>
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
+                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} />
                                 </li>
                             ))}
                         </ul>

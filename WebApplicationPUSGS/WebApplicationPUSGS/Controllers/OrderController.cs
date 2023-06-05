@@ -52,7 +52,8 @@ namespace WebApplicationPUSGS.Controllers
         public ActionResult GetAllOrderForBuyer(string email) {
             try
             {
-                return Ok(_orderService.GetAllOrdersForBuyer(email));
+                Tuple<List<OrderDto>, List<OrderDto>> t = _orderService.GetCurrentAndPastOrdersForBuyer(email);
+                return Ok(t);
             }
             catch (Exception)
             {

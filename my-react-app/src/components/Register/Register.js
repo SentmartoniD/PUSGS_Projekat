@@ -22,6 +22,7 @@ function Register() {
     const [dateOfBirth, setDateOfBirth] = useState(''); const [isDateOfBirthValid, setIsDateOfBirthValid] = useState(false);
     const [userType, setUserType] = useState(''); const [isUserTypeValid, setIsUserTypeValid] = useState(false);
     const [image, setImage] = useState(""); const [isImageValid, setIsImageValid] = useState(false);
+    const [file, setFile] = useState();
     const [address, setAddress] = useState(''); const [isAddressValid, setIsAdrressValid] = useState(false); const [isAddressFocus, setIsAddressFocus] = useState(false);
     const [password, setPassword] = useState(''); const [isPasswordValid, setIsPasswordValid] = useState(false); const [isPasswordFocus, setIsPasswordFocus] = useState(false);
     const [matchPassword, setMatchPassword] = useState(''); const [isMatchPasswordValid, setIsMatchPasswordValid] = useState(''); const [isMatchPasswordFocus, setIsMatchPasswordFocus] = useState(false);
@@ -71,8 +72,10 @@ function Register() {
         //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
 
         try {
-            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, image, password)
-            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, "imageString", password);
+            const formData = new FormData();
+            formData.append('file', file)
+            console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, formData, password)
+            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, "formData", password);
             console.log(response.data);
             alert("You have successfully registered!")
             navigateToLogin();
@@ -88,19 +91,8 @@ function Register() {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        console.log(file)
-        const reader = new FileReader();
-        /*  const blob = new Blob([reader.result], { type: file.type });
-          const fileproba = new File([blob], "proba/png", { lastModified: file.lastModified });*/
-        reader.onload = () => {
-            setImage(reader.result);
-            console.log(reader.result)
-            console.log(reader.result.length)
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        setFile(file);
+        setImage(URL.createObjectURL(file));
     }
 
     return (

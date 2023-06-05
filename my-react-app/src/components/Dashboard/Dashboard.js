@@ -23,7 +23,7 @@ function Dashboard() {
                         <Link to={"/home/article-list"} className="Link" >New order</Link>
                     </li>
                     <li id="4" className="ListItem" >
-                        <>Current and past orders</>
+                        <Link to={'/home/current-past-orders'} className="Link" >Current/past orders</Link>
                     </li>
                     <li id="5" className="ListItem" >
                         <Link to={"/home/aprove-verify-users"} className="Link" >Aprove/Verify users</Link>

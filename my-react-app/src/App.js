@@ -12,6 +12,7 @@ import ApproveVerifyUsers from './components/ApproveVerifyUsers/ApproveVerifyUse
 import AricleList from './components/ArticleList/ArticleList';
 import MyCart from './components/MyCart/MyCart';
 import AllOrders from './components/AllOrders/AllOrders';
+import CurrentPastOrders from './components/CurrentPastOrders/CurrentPastOrders';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
             <Route path='/home/article-list' element={<AricleList />} />
+          </Route>
+          <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
+            <Route path='/home/current-past-orders' element={<CurrentPastOrders />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
             <Route path='/home/aprove-verify-users' element={<ApproveVerifyUsers />} />

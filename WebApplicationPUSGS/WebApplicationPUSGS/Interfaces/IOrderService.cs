@@ -12,14 +12,10 @@ namespace WebApplicationPUSGS.Interfaces
 
         List<OrderDto> GetAllOrders();
 
-        List<OrderDto> GetAllOrdersForBuyer(string email);
-
         List<OrderDto> GetAllCurrentOrdersForSeller(string email);
 
         List<OrderDto> GetAllPastOrdersForSeller(string email);
 
-        List<OrderDto> GetAllCurrentOrdersForBuyer(string email);
-
-        List<OrderDto> GetAllPastOrdersForBuyer(string email);
+        Tuple<List<OrderDto>, List<OrderDto>> GetCurrentAndPastOrdersForBuyer(string email);
     }
 }

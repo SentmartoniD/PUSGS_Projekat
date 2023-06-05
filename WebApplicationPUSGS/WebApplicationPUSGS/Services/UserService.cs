@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -39,6 +40,7 @@ namespace WebApplicationPUSGS.Services
 
             User user = _mapper.Map<User>(newUser);
             user.Password = GetHashValueInString(newUser.Password);
+ 
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
@@ -160,7 +162,7 @@ namespace WebApplicationPUSGS.Services
                         user.Address = userDtoRegistration.Address;
                     if (userDtoRegistration.UserType != null && userDtoRegistration.UserType != string.Empty)
                         user.UserType = userDtoRegistration.UserType;
-                    if (userDtoRegistration.Image != null && userDtoRegistration.Image != string.Empty)
+                    if (userDtoRegistration.Image != null)
                         user.Image = userDtoRegistration.Image;
                     if (userDtoRegistration.Password != null && userDtoRegistration.Password != string.Empty)
                         user.Password = GetHashValueInString(userDtoRegistration.Password);

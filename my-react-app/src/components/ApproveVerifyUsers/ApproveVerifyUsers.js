@@ -1,6 +1,7 @@
 import { GetUsers } from "../../services/UserService";
 import { useState, useEffect } from "react";
 import { UpdateUserStatus } from "../../services/UserService";
+import axios from "axios";
 
 function ApproveVerifyUsers() {
     const [users, setUsers] = useState([]);
@@ -28,7 +29,35 @@ function ApproveVerifyUsers() {
         try {
             const response = await UpdateUserStatus(userid, status);
             alert("Users status changed successfully!")
-            //KELL KULDENI EMAIL HA VERIFIED
+            if (status === "verify") {
+                const emailData = {
+                    service_id: 'YOUR_SERVICE_ID',
+                    template_id: 'YOUR_TEMPLATE_ID',
+                    user_id: 'YOUR_USER_ID',
+                    template_params: {
+                        to_email: 'example@gmail.com',
+                        subject: 'Hello from React',
+                        message: 'This is the email message.',
+                    },
+                    access_token: 'YOUR_ACCESS_TOKEN',
+                };
+
+            }
+            else if (status === "unverify") {
+                const emailData = {
+                    service_id: 'service_jsr3vhk',
+                    template_id: 'template_0wsks49',
+                    user_id: 's8B1zFuerOqESsscI',
+                    template_params: {
+                        to_email: 'denessentmartoni@gmail.com',
+                        subject: 'Hello from React',
+                        message: 'Your verification has been denied.',
+                    },
+                    access_token: 'hjhgv6zBMmYyQR1Pym_Il',
+                };
+                await axios.post('https://api.emailjs.com/api/v1.0/email/send', emailData);
+            }
+
         }
         catch (err) {
             if (!err?.response)

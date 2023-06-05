@@ -52,16 +52,6 @@ namespace WebApplicationPUSGS.Services
             return _mapper.Map<List<OrderDto>>(_dbContext.Orders.ToList());
         }
 
-        public List<OrderDto> GetAllOrdersForBuyer(string email)
-        {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            _dbContext.Entry(user).State = EntityState.Detached;
-
-            List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
-
-            return _mapper.Map<List<OrderDto>>(orders);
-        }
-
         public List<OrderDto> GetAllCurrentOrdersForSeller(string email)
         {
             User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
@@ -147,33 +137,13 @@ namespace WebApplicationPUSGS.Services
             return _mapper.Map<List<OrderDto>>(ordersForSeller);
         }
 
-        public List<OrderDto> GetAllCurrentOrdersForBuyer(string email)
+        public Tuple<List<OrderDto>, List<OrderDto>> GetCurrentAndPastOrdersForBuyer(string email)
         {
             User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
             _dbContext.Entry(user).State = EntityState.Detached;
 
             List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
             List<Order> currentOrders = new List<Order>();
-
-            foreach(Order o in orders)
-            {
-                if (o.DateOfOrder != "canceled")
-                {
-                    TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
-                    if (timeDifference.TotalMinutes < 4)
-                        currentOrders.Add(o);
-                }
-            }
-
-            return _mapper.Map<List<OrderDto>>(currentOrders);
-        }
-
-        public List<OrderDto> GetAllPastOrdersForBuyer(string email)
-        {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            _dbContext.Entry(user).State = EntityState.Detached;
-
-            List<Order> orders = _dbContext.Orders.Where(x => x.UserBuyerId == user.UserId).ToList();
             List<Order> pastOrders = new List<Order>();
 
             foreach (Order o in orders)
@@ -181,14 +151,17 @@ namespace WebApplicationPUSGS.Services
                 if (o.DateOfOrder != "canceled")
                 {
                     TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
-                    if (timeDifference.TotalMinutes >= 4)
+                    if (timeDifference.TotalMinutes < 4)
+                        currentOrders.Add(o);
+                    else
                         pastOrders.Add(o);
                 }
-                else
-                    pastOrders.Add(o);
             }
 
-            return _mapper.Map<List<OrderDto>>(pastOrders);
+            List<OrderDto> currentOrdersDto = _mapper.Map<List<OrderDto>>(currentOrders);
+            List<OrderDto> pasttOrdersDto = _mapper.Map<List<OrderDto>>(pastOrders);
+
+            return new Tuple<List<OrderDto>, List<OrderDto>>(currentOrdersDto, pasttOrdersDto);
         }
     }
 }
