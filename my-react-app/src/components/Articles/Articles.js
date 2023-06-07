@@ -31,8 +31,10 @@ function Articles() {
 
     const handleAddArticle = async () => {
         //A KEP MUSAJ HOGY PNG LEGYEN VAGY ESETLEG JPEG, ES NEM SZABAD HOGY TUL NAGY LEGYEN
-        if (name === "" || price === 0 || quantity === 0 || description === "" || image === "")
-            return;
+        /* if (name === "" || price === 0 || quantity === 0 || description === "" || image === "") {
+              alert("Must fill all fields!")
+              return;
+          }*/
         try {
             const resp = await CreateArticle(name, price, quantity, description, "imageString");
             console.log(resp.data);

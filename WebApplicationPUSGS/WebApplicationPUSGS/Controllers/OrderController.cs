@@ -89,13 +89,39 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
-        [HttpGet("cancel-order/{id}")]
+        [HttpDelete("cancel-order/{id}")]
         [Authorize(Roles = "buyer")]
         public ActionResult CancelOrder(int id) {
             try
             {
                 _orderService.DeleteOrder(id);
                 return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+        /*
+        [HttpGet("order-details")]
+        [Authorize(Roles = "buyer, seller, admin")]
+        public ActionResult OrderDetails(int parameter1, string parameter2) {
+            try
+            {
+                return Ok(_orderService.GetOrderDetails(parameter1, parameter2));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }*/
+        [HttpGet("order-details/{id}/{email}")]
+        [Authorize(Roles = "buyer, seller, admin")]
+        public ActionResult OrderDetails(int id, string email)
+        {
+            try
+            {
+                return Ok(_orderService.GetOrderDetails(id, email));
             }
             catch (Exception)
             {

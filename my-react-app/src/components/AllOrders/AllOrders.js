@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GetAllOrdersForAdmin, GetAllCurrentOrdersForSeller, GetAllPastOrdersForSeller } from "../../services/OrderService";
+import CountdownTimer from "../CountdownTimer";
 
 
 
@@ -9,8 +10,8 @@ const Orders = (props) => {
     const [orders, setOrders] = useState([]);
 
     const navigate = useNavigate();
-    const navigateToOrder = () => {
-        navigate('/home/all-orders/{id}');
+    const navigateToOrderDetails = (oId) => {
+        navigate('order-details/:' + oId);
     };
 
     useEffect(() => {
@@ -43,10 +44,20 @@ const Orders = (props) => {
         GetOrders();
     }, [props.userType])
 
+    const getTime = (dateOfOrder) => {
+        const date = new Date(dateOfOrder);
+        date.setMinutes(date.getMinutes() + 4);
+        const currentTime = new Date();
+        return Math.floor((date - currentTime) / 1000);
+    };
+
+    const handleDetails = (oId) => {
+        navigateToOrderDetails(oId);
+    }
 
     return (
         <section className="section-allorders" >
-            <h1>All orders</h1>
+            <h1>Orders!</h1>
             {
                 orders.length === 0 ? <></> :
                     <ul className="ul-items-allorders" >
@@ -55,9 +66,9 @@ const Orders = (props) => {
                                 <label>Adrress : {order.address}</label>
                                 <label>Comment : {order.comment}</label>
                                 <label>Price : {order.price}</label>
-                                {props.userType === "admin" ? <label>Delivery state : { }</label> : <></>}
-                                {props.userType === "seller-new" ? <label>Countdown : { }</label> : <></>}
-                                <button>Details</button>
+                                {props.userType === "admin" ? <label>Delivery state : {order.dateOfOrder === "canceled" ? "Canceled!" : getTime(order.dateOfOrder) > 0 ? "In delivery!" : "Delivered!"}</label> : <></>}
+                                {props.userType === "seller-new" ? <CountdownTimer initialCount={getTime(order.dateOfOrder)} /> : <></>}
+                                <button onClick={() => handleDetails(order.orderId)} >Details</button>
                             </li>
                         ))}
                     </ul>

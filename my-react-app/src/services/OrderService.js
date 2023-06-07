@@ -39,3 +39,15 @@ export const GetAllPastOrdersForSeller = async () => {
 export const CancelOrder = async (id) => {
     return await axios.delete('https://localhost:44368/api/orders/cancel-order/' + id, GetConfig());
 }
+/*
+export const GetOrderDetails = async (id) => {
+    return await axios.get('https://localhost:44368/api/orders/order-details', {
+        params: {
+            parameter1: id,
+            parameter2: GetEmail()
+        }, ...GetConfig()
+    });
+}*/
+export const GetOrderDetails = async (id) => {
+    return await axios.get('https://localhost:44368/api/orders/order-details/' + id + "/" + GetEmail(), GetConfig());
+}

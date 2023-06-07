@@ -86,7 +86,8 @@ namespace WebApplicationPUSGS.Services
                         }
                     }
                 }
-                ordersForSeller.Add(tempOrder);
+                if (tempOrder.ArticleIds.Count != 0)
+                    ordersForSeller.Add(tempOrder);
             }
 
 
@@ -108,7 +109,9 @@ namespace WebApplicationPUSGS.Services
 
             foreach (Order o in orders)
             {
-                if (o.DateOfOrder != "canceled")
+                if (o.DateOfOrder == "canceled")
+                    continue;
+                else
                 {
                     TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
                     if (timeDifference.TotalMinutes < 4)
@@ -130,7 +133,8 @@ namespace WebApplicationPUSGS.Services
                         }
                     }
                 }
-                ordersForSeller.Add(tempOrder);
+                if(tempOrder.ArticleIds.Count != 0)
+                    ordersForSeller.Add(tempOrder);
             }
 
 
@@ -167,7 +171,8 @@ namespace WebApplicationPUSGS.Services
         public void DeleteOrder(int id)
         {
             Order order = _dbContext.Orders.FirstOrDefault(X => X.OrderId == id);
-            _dbContext.Entry(order).State = EntityState.Detached;
+            order.DateOfOrder = "canceled";
+            _dbContext.SaveChanges();
 
             Article tempArticle = new Article();
 
@@ -177,8 +182,45 @@ namespace WebApplicationPUSGS.Services
                 _dbContext.SaveChanges();
             }
 
-            _dbContext.Orders.Remove(order);
+        }
 
+        public OrderDetailsDto GetOrderDetails(int id, string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            _dbContext.Entry(user).State = EntityState.Detached;
+
+            Order order = _dbContext.Orders.FirstOrDefault(u => u.OrderId == id);
+
+            OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
+            orderDetailsDto.Address = order.Address; orderDetailsDto.Comment = order.Comment;  orderDetailsDto.Price = order.Price; orderDetailsDto.DateOfOrder = order.DateOfOrder;
+            orderDetailsDto.AmountOfArticles = new List<int>(); orderDetailsDto.Articles = new List<Article>(); orderDetailsDto.OrderId = order.OrderId;
+
+            Article tempArticle = new Article();
+
+            if (user.UserType == "admin" || user.UserType == "buyer")
+            {
+                for (int i = 0; i < order.ArticleIds.ToList().Count; i++) {
+                    orderDetailsDto.Articles.Add(_dbContext.Articles.FirstOrDefault(x => x.ArticleId == order.ArticleIds.ToList()[i]));
+                    orderDetailsDto.AmountOfArticles.Add(order.AmountOfArticles.ToList()[i]);
+                }
+            }
+            else {
+                List<Article> articles = _dbContext.Articles.Where(x => x.UserSellerId == user.UserId).ToList();
+                for (int i = 0; i < order.ArticleIds.ToList().Count; i++)
+                {
+                    foreach (Article a in articles)
+                    {
+                        if (order.ArticleIds.ToList()[i] == a.ArticleId)
+                        {
+                            orderDetailsDto.Articles.Add(a);
+                            orderDetailsDto.AmountOfArticles.Add(order.AmountOfArticles.ToList()[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return orderDetailsDto;
         }
     }
 }

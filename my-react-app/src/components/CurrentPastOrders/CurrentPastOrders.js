@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { GetAllOrdersForBuyer } from "../../services/OrderService";
 import CountdownTimer from "../CountdownTimer";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -8,6 +9,7 @@ import CountdownTimer from "../CountdownTimer";
 const CurrentPastOrders = () => {
     const [currentOrders, setCurrentOrders] = useState([]);
     const [pastOrders, setPastOrders] = useState([]);
+    //const [trigger, setTrigger] = useState(0);
 
     useEffect(() => {
         const GetOrders = async () => {
@@ -32,8 +34,17 @@ const CurrentPastOrders = () => {
         const date = new Date(dateOfOrder);
         date.setMinutes(date.getMinutes() + 4);
         const currentTime = new Date();
-        return Math.floor((date - currentTime) / (1000 * 60));
+        return Math.floor((date - currentTime) / 1000);
     };
+
+    const navigate = useNavigate();
+    const navigateToOrderDetails = (oId) => {
+        navigate('order-details/:' + oId);
+    };
+
+    const handleDetails = (oId) => {
+        navigateToOrderDetails(oId);
+    }
 
     return (
         <section className="continaer-cpo" >
@@ -64,7 +75,7 @@ const CurrentPastOrders = () => {
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
-                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} />
+                                    <button onClick={() => handleDetails(order.orderId)} >Details</button>
                                 </li>
                             ))}
                         </ul>

@@ -19,5 +19,7 @@ namespace WebApplicationPUSGS.Interfaces
         Tuple<List<OrderDto>, List<OrderDto>> GetCurrentAndPastOrdersForBuyer(string email);
 
         void DeleteOrder(int id);
+
+        OrderDetailsDto GetOrderDetails(int id, string email);
     }
 }

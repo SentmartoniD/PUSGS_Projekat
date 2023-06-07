@@ -13,6 +13,7 @@ import AricleList from './components/ArticleList/ArticleList';
 import MyCart from './components/MyCart/MyCart';
 import AllOrders from './components/AllOrders/AllOrders';
 import CurrentPastOrders from './components/CurrentPastOrders/CurrentPastOrders';
+import OrderDetails from './components/OrderDetails.js/OrderDetails';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
             <Route path='/home/current-past-orders' element={<CurrentPastOrders />} ></Route>
+            <Route path='/home/current-past-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
             <Route path='/home/aprove-verify-users' element={<ApproveVerifyUsers />} />
@@ -41,12 +43,15 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["seller"]} type="new" />} >
             <Route path='/home/new-orders' element={<AllOrders userType="seller-new" />} />
+            <Route path='/home/new-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["seller"]} type="my" />} >
             <Route path='/home/my-orders' element={<AllOrders userType="seller-my" />} />
+            <Route path='/home/my-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
             <Route path='/home/all-orders' element={<AllOrders userType="admin" />} />
+            <Route path='/home/all-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
         </Route>
       </Route>
