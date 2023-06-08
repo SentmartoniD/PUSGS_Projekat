@@ -79,3 +79,12 @@ export const UpdateUserStatus = async (id, status) => {
     return await axios.post('https://localhost:44368/api/users/update-status', { userid: id, status: status }, GetConfig());
 }
 
+export const UploadImage = async (img, email) => {
+    const formData = new FormData();
+    formData.append('image', img);
+    return await axios.post('https://localhost:44368/api/users/upload-picture/' + email, formData,
+        {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }
+    );
+}

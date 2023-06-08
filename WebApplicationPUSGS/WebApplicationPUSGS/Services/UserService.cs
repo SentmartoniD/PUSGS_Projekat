@@ -15,6 +15,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -40,13 +41,30 @@ namespace WebApplicationPUSGS.Services
 
             User user = _mapper.Map<User>(newUser);
             user.Password = GetHashValueInString(newUser.Password);
- 
+
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
             //VISSAKULDI(AZ INFORMACIOT A FRONTNAK A UJON KESZULT HASZNALOROL) A DTUUSERREGISTRATION AHOL AZ ID 0, DE BAZISBAN NEM AZ VAN
             //ki kell hogy huzzam a bazisbol ez az uj hasznalot az id miatt
             return _mapper.Map<UserDtoRegistration>(user); 
+        }
+
+        public bool UploadImage(IFormFile file, string email)
+        {
+            bool rez = true;
+
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                user.ImageFile = memoryStream.ToArray();
+            }
+
+            _dbContext.SaveChanges();
+
+            return rez;
         }
 
         public string LoginUser(UserDtoLogin userDto)
@@ -162,8 +180,8 @@ namespace WebApplicationPUSGS.Services
                         user.Address = userDtoRegistration.Address;
                     if (userDtoRegistration.UserType != null && userDtoRegistration.UserType != string.Empty)
                         user.UserType = userDtoRegistration.UserType;
-                    if (userDtoRegistration.Image != null)
-                        user.Image = userDtoRegistration.Image;
+                    if (userDtoRegistration.ImageFile != null)
+                        user.ImageFile = userDtoRegistration.ImageFile;
                     if (userDtoRegistration.Password != null && userDtoRegistration.Password != string.Empty)
                         user.Password = GetHashValueInString(userDtoRegistration.Password);
             }
@@ -203,5 +221,6 @@ namespace WebApplicationPUSGS.Services
 
             return userDtoStatus;
         }
+
     }
 }

@@ -9,9 +9,9 @@ namespace WebApplicationPUSGS.Interfaces
 {
     public interface IUserService
     {
-        //Add the new user to the database
+        
         UserDtoRegistration AddUser(UserDtoRegistration newUser);
-        //Check if the user is in the databse and create the token for him
+        
         string LoginUser(UserDtoLogin userDto);
 
         void DeleteUserById(int id);
@@ -25,5 +25,7 @@ namespace WebApplicationPUSGS.Interfaces
         UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration);
 
         UserDtoStatus UpdateUserStatus(UserDtoStatus userDtoStatus);
+
+        bool UploadImage(Microsoft.AspNetCore.Http.IFormFile file, string email);
     }
 }

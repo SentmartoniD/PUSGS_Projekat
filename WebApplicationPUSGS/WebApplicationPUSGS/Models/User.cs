@@ -23,7 +23,7 @@ namespace WebApplicationPUSGS.Models
 
         public string UserType { get; set; }
 
-        public string Image { get; set; }
+        public byte[] ImageFile { get; set; }
 
         public string Password { get; set; }
 

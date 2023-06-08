@@ -24,7 +24,7 @@ namespace WebApplicationPUSGS.Dto
 
         public string UserType { get; set; }
 
-        public string Image { get; set; }
+        public byte[] ImageFile { get; set; }
 
         public Status Approved { get; set; }
 

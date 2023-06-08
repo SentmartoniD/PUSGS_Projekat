@@ -1,4 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react";
 import './Dashboard.css'
 import "../Profile/Profile.css";
 import "../ApproveVerifyUsers/ApproveVerifyUsers.css";
@@ -8,6 +10,18 @@ import "../MyCart/MyCart.css"
 import "../AllOrders/AllOrders.css"
 
 function Dashboard() {
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const logoutTimer = setTimeout(() => {
+            // Redirect the user to the login page
+            alert("Session expired, login again!")
+            navigate('/');
+        }, 30 * 1000); // 50 minutes
+
+        return () => clearTimeout(logoutTimer); // Clear the timer when the component unmounts or changes
+    }, [navigate]);
 
     return (
         <>

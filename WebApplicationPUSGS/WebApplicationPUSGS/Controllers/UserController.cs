@@ -26,7 +26,7 @@ namespace WebApplicationPUSGS.Controllers
         public ActionResult CreateUser([FromBody] UserDtoRegistration userDto) {
             try
             {
-                return Ok(_userService.AddUser(userDto));
+                return Ok();//_userService.AddUser(userDto)
             }
             catch (Exception e)
             {
@@ -44,7 +44,7 @@ namespace WebApplicationPUSGS.Controllers
         public ActionResult UploadPicture(IFormFile image, string email) {
             try
             {
-                return Ok();
+                return Ok(_userService.UploadImage(image, email));
             }
             catch (Exception)
             {
@@ -77,8 +77,9 @@ namespace WebApplicationPUSGS.Controllers
         [Authorize(Roles = "admin, buyer, seller")]
         public ActionResult GetUserByEmail(string email) {
             try
-            {  
+            {
                 return Ok(_userService.GetUserByEmail(email));
+
             }
             catch (Exception)
             {

@@ -32,6 +32,7 @@ function Profile() {
                 console.log("this is the response");
                 console.log(resp);
                 setUser(resp.data);
+                showImage(resp.data.imageFile);
             }
             catch (err) {
                 if (!err?.response)
@@ -103,19 +104,14 @@ function Profile() {
         console.log("vege!")
     }
 
-    const handleImageChange = (e) => {
-        const file = image;
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            setImage(reader.result);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-
-        return file;
+    const showImage = (file) => {
+        const base64String = btoa(
+            new Uint8Array(file).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+            )
+        );
+        setImage(`data:image/png;base64, ${base64String}`);
     }
 
     return (
@@ -205,7 +201,7 @@ function Profile() {
                 </label>
                 <div className='div-profile-img'>
                     <input id='file' type='file' accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
-                    <img className='img-profile' width={70} height={70} ></img>
+                    <img className='img-profile' src={image} width={70} height={70} ></img>
                 </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />
