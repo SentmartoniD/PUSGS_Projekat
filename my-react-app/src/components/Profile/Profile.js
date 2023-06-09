@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetRegisteredUser, UpdateUser } from "../../services/UserService";
+import { GetRegisteredUser, UpdateUser, GetImageForUser, UploadImageForUser } from "../../services/UserService";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import emailjs from "@emailjs/browser"
@@ -22,6 +22,7 @@ function Profile() {
     const [address, setAddress] = useState(''); const [isAddressValid, setIsAdrressValid] = useState(false); const [isAddressFocus, setIsAddressFocus] = useState(false);
     const [userType, setUserType] = useState(''); const [isUserTypeValid, setIsUserTypeValid] = useState(false);
     const [image, setImage] = useState(""); const [isImageValid, setIsImageValid] = useState(false);
+    const [file, setFile] = useState();
     const [password, setPassword] = useState(''); const [isPasswordValid, setIsPasswordValid] = useState(false); const [isPasswordFocus, setIsPasswordFocus] = useState(false);
     const [matchPassword, setMatchPassword] = useState(''); const [isMatchPasswordValid, setIsMatchPasswordValid] = useState(''); const [isMatchPasswordFocus, setIsMatchPasswordFocus] = useState(false);
 
@@ -32,7 +33,12 @@ function Profile() {
                 console.log("this is the response");
                 console.log(resp);
                 setUser(resp.data);
-                showImage(resp.data.imageFile);
+                const resp1 = await GetImageForUser();
+                const imageBytes = new Uint8Array(resp1.data);
+                const blob = new Blob([imageBytes], { type: 'image/png' });
+                console.log(URL.createObjectURL(blob));
+
+                setImage(URL.createObjectURL(blob));
             }
             catch (err) {
                 if (!err?.response)
@@ -88,10 +94,11 @@ function Profile() {
             return;
         }
 
-        const imageString = btoa(image);
         try {
-            const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, imageString, password);
+            const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, "", password);
             console.log(response.data);
+            if (file != undefined)
+                await UploadImageForUser(image, email);
             alert("User updated successfully!")
             setTrigger(trigger + 1);
         }
@@ -104,14 +111,10 @@ function Profile() {
         console.log("vege!")
     }
 
-    const showImage = (file) => {
-        const base64String = btoa(
-            new Uint8Array(file).reduce(
-                (data, byte) => data + String.fromCharCode(byte),
-                ''
-            )
-        );
-        setImage(`data:image/png;base64, ${base64String}`);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+        setImage(URL.createObjectURL(file));
     }
 
     return (
@@ -200,7 +203,7 @@ function Profile() {
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
                 <div className='div-profile-img'>
-                    <input id='file' type='file' accept='image/png' className='input-register-file' onChange={(e) => setImage(e.target.value)} ></input>
+                    <input id='file' type='file' accept='image/png' className='input-register-file' onChange={handleImageChange} ></input>
                     <img className='img-profile' src={image} width={70} height={70} ></img>
                 </div>
                 <label htmlFor='password1' >Password :

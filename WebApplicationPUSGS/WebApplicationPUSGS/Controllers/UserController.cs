@@ -26,7 +26,7 @@ namespace WebApplicationPUSGS.Controllers
         public ActionResult CreateUser([FromBody] UserDtoRegistration userDto) {
             try
             {
-                return Ok();//_userService.AddUser(userDto)
+                return Ok(_userService.AddUser(userDto));
             }
             catch (Exception e)
             {
@@ -45,6 +45,21 @@ namespace WebApplicationPUSGS.Controllers
             try
             {
                 return Ok(_userService.UploadImage(image, email));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("get-picture/{email}")]
+        [Authorize(Roles = "admin, buyer, seller")]
+        public ActionResult GetPicture(string email)
+        {
+            try
+            {
+                byte[] imageBytes = _userService.GetImage(email);
+                return File(imageBytes, "image/png");
             }
             catch (Exception)
             {

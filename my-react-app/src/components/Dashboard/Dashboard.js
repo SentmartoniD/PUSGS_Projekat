@@ -18,7 +18,7 @@ function Dashboard() {
             // Redirect the user to the login page
             alert("Session expired, login again!")
             navigate('/');
-        }, 30 * 1000); // 50 minutes
+        }, 50 * 60 * 1000); // 50 minutes
 
         return () => clearTimeout(logoutTimer); // Clear the timer when the component unmounts or changes
     }, [navigate]);

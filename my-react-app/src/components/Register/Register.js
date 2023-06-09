@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RegisterUser, UploadImage } from '../../services/UserService';
+import { RegisterUser, UploadImageForUser } from '../../services/UserService';
 import './Register.css'
 
 //REGEX FOR USERNAME, EMAIL, PASSWORD, FIRSTNAME, LASTNAME AND ADDRESS
@@ -73,9 +73,9 @@ function Register() {
 
         try {
             console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, file, password)
-            const response = await RegisterUser(getImageString(), email, firstName, lastName, dateOfBirth, address, userType, password);
+            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, password);
             console.log(response.data);
-            const response2 = await UploadImage(file, email);
+            const response2 = await UploadImageForUser(file, email);
             console.log(response2.data);
             alert("You have successfully registered!")
             navigateToLogin();
@@ -93,15 +93,6 @@ function Register() {
         const file = e.target.files[0];
         setFile(file);
         setImage(URL.createObjectURL(file));
-    }
-
-    const getImageString = () => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = function () {
-            const bases = reader.result.split(',')[1];
-            return bases;
-        }
     }
 
     return (

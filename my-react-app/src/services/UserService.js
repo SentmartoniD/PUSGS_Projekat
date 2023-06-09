@@ -63,10 +63,10 @@ export const GetRegisteredUser = async () => {
     return await axios.get('https://localhost:44368/api/users/get-user-by-email/' + GetEmail(), GetConfig());
 }
 
-export const UpdateUser = async (id, usrnm, eml, fnm, lnm, dtb, addr, typU, img, pwd) => {
+export const UpdateUser = async (id, usrnm, eml, fnm, lnm, dtb, addr, typU, pwd) => {
     return await axios.put('https://localhost:44368/api/users/update/' + id, {
         userid: id, username: usrnm, email: eml, firstname: fnm, lastname: lnm,
-        dateofbirth: dtb, address: addr, usertype: typU, image: img, password: pwd
+        dateofbirth: dtb, address: addr, usertype: typU, password: pwd
     }, GetConfig()
     );
 }
@@ -79,7 +79,7 @@ export const UpdateUserStatus = async (id, status) => {
     return await axios.post('https://localhost:44368/api/users/update-status', { userid: id, status: status }, GetConfig());
 }
 
-export const UploadImage = async (img, email) => {
+export const UploadImageForUser = async (img, email) => {
     const formData = new FormData();
     formData.append('image', img);
     return await axios.post('https://localhost:44368/api/users/upload-picture/' + email, formData,
@@ -87,4 +87,11 @@ export const UploadImage = async (img, email) => {
             headers: { 'Content-Type': 'multipart/form-data' },
         }
     );
+}
+
+export const GetImageForUser = async () => {
+    return await axios.get('https://localhost:44368/api/users/get-picture/' + GetEmail(), {
+        ...GetConfig(),
+        responseType: 'arraybuffer',
+    });
 }

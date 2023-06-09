@@ -222,5 +222,10 @@ namespace WebApplicationPUSGS.Services
             return userDtoStatus;
         }
 
+        public byte[] GetImage(string email)
+        {
+            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+            return user.ImageFile;
+        }
     }
 }
