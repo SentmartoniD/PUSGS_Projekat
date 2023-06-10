@@ -22,7 +22,7 @@ const Article = (props) => {
     return (
         <article className="article" >
             <h2>{props.name}</h2>
-            <img width={120} height={120} ></img>
+            <img width={120} height={120} src={`data:image/png;base64,${props.image}`} ></img>
             <p>{props.description}</p>
             <label>Price: {props.price}</label>
             <label>Available : {props.quantity}</label>

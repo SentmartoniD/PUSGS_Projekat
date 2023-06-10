@@ -11,7 +11,6 @@ function MyCart() {
     const [articles, setArticles] = useState([]);
     const [comment, setComment] = useState("");
     const [address, setAddress] = useState("");
-    const [price, setPrice] = useState(0);
     const [amounts, setAmounts] = useState([]);
     const [ids, setIds] = useState([]);
 
@@ -27,7 +26,6 @@ function MyCart() {
     const handleClearMyCart = async () => {
         localStorage.setItem("articles", JSON.stringify([]));
         setArticles([]);
-        //meg kell valahogy hogy jelentsem hogy uritse ki az ul-t
     }
 
     const handleOrder = async () => {
@@ -36,12 +34,15 @@ function MyCart() {
             alert("Your cart is empty!");
             navigateToArticleList();
         }
+        if (comment === "" || address === "") {
+            alert("You must type a comment and an address!")
+            return;
+        }
         try {
             articles.forEach((article) => {
                 ids.push(article.articleId);
                 const mnt = document.getElementById(article.articleId + "amount").value;
                 amounts.push(mnt);
-                //setPrice((prevPrice) => prevPrice + (mnt * article.price) + DELIVERY_PRICE);
                 plsprice = plsprice + (mnt * article.price);
             });
             plsprice = plsprice + getDeliverPrice();
@@ -96,7 +97,7 @@ function MyCart() {
                                 <li id={article.articleId} className="item-mycart" >
                                     <article className="article-mycart" >
                                         <h2>{article.name}</h2>
-                                        <img width={100} height={100} ></img>
+                                        <img width={100} height={100} src={`data:image/png;base64,${article.imageFile}`} ></img>
                                         <p>{article.description}</p>
                                         <label id={article.articleId + "price"} >Price: {article.price}</label>
                                         <label>Available : {article.quantity}</label>

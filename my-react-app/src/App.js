@@ -23,35 +23,35 @@ function App() {
       <Route element={<ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} />} >
         <Route path='/home' element={<Dashboard />}>
           <Route element={< ProtectedRoute allowedRoles={["admin", "buyer", "seller"]} type="profile" />} >
-            <Route path='/home/profile' element={<Profile />} />
+            <Route path='profile' element={<Profile />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["seller"]} type="articles" />} >
-            <Route path='/home/articles' element={<Articles />} />
+            <Route path='articles' element={<Articles />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
-            <Route path='/home/article-list' element={<AricleList />} />
+            <Route path='article-list' element={<AricleList />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
-            <Route path='/home/current-past-orders' element={<CurrentPastOrders />} ></Route>
-            <Route path='/home/current-past-orders/order-details/:id' element={<OrderDetails />} ></Route>
+            <Route path='current-past-orders' element={<CurrentPastOrders />} ></Route>
+            <Route path='current-past-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
-            <Route path='/home/aprove-verify-users' element={<ApproveVerifyUsers />} />
+            <Route path='aprove-verify-users' element={<ApproveVerifyUsers />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["buyer"]} />} >
-            <Route path='/home/my-cart' element={<MyCart />} />
+            <Route path='my-cart' element={<MyCart />} />
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["seller"]} type="new" />} >
-            <Route path='/home/new-orders' element={<AllOrders userType="seller-new" />} />
-            <Route path='/home/new-orders/order-details/:id' element={<OrderDetails />} ></Route>
+            <Route path='new-orders' element={<AllOrders userType="seller-new" />} />
+            <Route path='new-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["seller"]} type="my" />} >
-            <Route path='/home/my-orders' element={<AllOrders userType="seller-my" />} />
-            <Route path='/home/my-orders/order-details/:id' element={<OrderDetails />} ></Route>
+            <Route path='my-orders' element={<AllOrders userType="seller-my" />} />
+            <Route path='my-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />} >
-            <Route path='/home/all-orders' element={<AllOrders userType="admin" />} />
-            <Route path='/home/all-orders/order-details/:id' element={<OrderDetails />} ></Route>
+            <Route path='all-orders' element={<AllOrders userType="admin" />} />
+            <Route path='all-orders/order-details/:id' element={<OrderDetails />} ></Route>
           </Route>
         </Route>
       </Route>

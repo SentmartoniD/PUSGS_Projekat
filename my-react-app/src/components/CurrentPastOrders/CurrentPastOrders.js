@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const CurrentPastOrders = () => {
     const [currentOrders, setCurrentOrders] = useState([]);
     const [pastOrders, setPastOrders] = useState([]);
-    //const [trigger, setTrigger] = useState(0);
+    const [trigger, setTrigger] = useState(0);
 
     useEffect(() => {
         const GetOrders = async () => {
@@ -28,11 +28,11 @@ const CurrentPastOrders = () => {
         }
         GetOrders();
 
-    }, [])
+    }, [trigger])
 
     const getTime = (dateOfOrder) => {
         const date = new Date(dateOfOrder);
-        date.setMinutes(date.getMinutes() + 4);
+        date.setMinutes(date.getMinutes() + 2);
         const currentTime = new Date();
         return Math.floor((date - currentTime) / 1000);
     };
@@ -46,6 +46,10 @@ const CurrentPastOrders = () => {
         navigateToOrderDetails(oId);
     }
 
+    const updateSharedState = () => {
+        setTrigger(trigger + 1);
+    };
+
     return (
         <section className="continaer-cpo" >
             <div className="box-cpo" >
@@ -58,7 +62,7 @@ const CurrentPastOrders = () => {
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
-                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} id={order.orderId} />
+                                    <CountdownTimer initialCount={() => getTime(order.dateOfOrder)} id={order.orderId} updateSharedState={updateSharedState} />
                                 </li>
                             ))}
                         </ul>

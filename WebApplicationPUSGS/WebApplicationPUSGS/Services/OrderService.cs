@@ -70,7 +70,7 @@ namespace WebApplicationPUSGS.Services
                 if (o.DateOfOrder == "canceled")
                     continue;
                 TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
-                if (timeDifference.TotalMinutes >= 4)
+                if (timeDifference.TotalMinutes >= 2)
                     continue;
 
                 string jsonString = JsonSerializer.Serialize(o);
@@ -114,7 +114,7 @@ namespace WebApplicationPUSGS.Services
                 else
                 {
                     TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
-                    if (timeDifference.TotalMinutes < 4)
+                    if (timeDifference.TotalMinutes < 2)
                         continue;
                 }
 
@@ -155,7 +155,7 @@ namespace WebApplicationPUSGS.Services
                 if (o.DateOfOrder != "canceled")
                 {
                     TimeSpan timeDifference = DateTime.Now - DateTime.Parse(o.DateOfOrder);
-                    if (timeDifference.TotalMinutes < 4)
+                    if (timeDifference.TotalMinutes < 2)
                         currentOrders.Add(o);
                     else
                         pastOrders.Add(o);

@@ -32,14 +32,16 @@ function Articles() {
     const handleAddArticle = async (e) => {
         e.preventDefault();
         //A KEP MUSAJ HOGY PNG LEGYEN VAGY ESETLEG JPEG, ES NEM SZABAD HOGY TUL NAGY LEGYEN
-        /* if (name === "" || price === 0 || quantity === 0 || description === "" || image === "") {
-              alert("Must fill all fields!")
-              return;
-          }*/
+        if (name === "" || price === 0 || quantity === 0 || description === "" || image === "") {
+            alert("Must fill all fields, price and quantity have to be a number!")
+            return;
+        }
+
         try {
             const resp = await CreateArticle(name, price, quantity, description);
             console.log(resp.data);
             const resp1 = await UploadImageForArticle(file, resp.data.articleId);
+            setImageModify("");
             alert("Successfully added the article!")
         }
         catch (err) {
@@ -71,10 +73,12 @@ function Articles() {
             return;
         }
         try {
-            const imageString = btoa(image);
-            const resp = await UpdateArticle(id, nameModify, priceModify, quantityModify, descriptionModify, imageString);
+            const resp = await UpdateArticle(id, nameModify, priceModify, quantityModify, descriptionModify);
             console.log(resp.data);
             alert("Successfully updated the article!");
+            if (imageModify !== undefined) {
+                const resp1 = await UploadImageForArticle(file, id);
+            }
         }
         catch (err) {
             if (!err?.response)
@@ -89,6 +93,12 @@ function Articles() {
         const file = e.target.files[0];
         setFile(file);
         setImage(URL.createObjectURL(file));
+    }
+
+    const handleModifyImageChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+        setImageModify(URL.createObjectURL(file));
     }
 
 
@@ -128,7 +138,7 @@ function Articles() {
                                         <label htmlFor={"description" + article.articleId} >Description : </label>
                                         <input id={"description" + article.articleId} type="text" className="input-articles" defaultValue={article.description} required onChange={(e) => setDescriptionModify(e.target.value)} ></input>
                                         <label htmlFor={"image_file" + article.articleId} >Image : </label>
-                                        <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={(e) => setImageModify(e.target.value)} ></input>
+                                        <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={handleModifyImageChange} ></input>
                                     </div>
                                     <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} ></img>
                                     <button onClick={() => handleUpdateArticle(article.articleId)} >Modify!</button>

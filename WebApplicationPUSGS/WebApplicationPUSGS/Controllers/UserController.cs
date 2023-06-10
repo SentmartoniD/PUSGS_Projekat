@@ -52,21 +52,6 @@ namespace WebApplicationPUSGS.Controllers
             }
         }
 
-        [HttpGet("get-picture/{email}")]
-        [Authorize(Roles = "admin, buyer, seller")]
-        public ActionResult GetPicture(string email)
-        {
-            try
-            {
-                byte[] imageBytes = _userService.GetImage(email);
-                return File(imageBytes, "image/png");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
         [HttpPost("login")]
         public IActionResult LoginUser([FromBody] UserDtoLogin userdto) {
             try
@@ -110,26 +95,18 @@ namespace WebApplicationPUSGS.Controllers
             {
                 return Ok(_userService.UpdateUser(id, userDtoRegistration));
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
+                if (e.Message == "Email already in use!")
+                    return StatusCode(StatusCodes.Status409Conflict, "Email already in use!");
+                else if (e.Message == "Username already in use!")
+                    return StatusCode(StatusCodes.Status409Conflict, "Username already in use!");
+                else if (e.Message == "There is no user ith that id!")
+                    return StatusCode(StatusCodes.Status409Conflict, "There is no user ith that id!");
+                else
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
             }
 
-        }
-
-        [HttpDelete("{id:int}")]
-        public ActionResult DeleteUser(int id)
-        {
-            try
-            {
-                _userService.DeleteUserById(id);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                //NotFound();
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
         }
 
         [HttpGet("{id:int}")]

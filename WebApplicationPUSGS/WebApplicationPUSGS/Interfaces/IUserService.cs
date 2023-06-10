@@ -27,7 +27,5 @@ namespace WebApplicationPUSGS.Interfaces
         UserDtoStatus UpdateUserStatus(UserDtoStatus userDtoStatus);
 
         bool UploadImage(Microsoft.AspNetCore.Http.IFormFile file, string email);
-
-        byte[] GetImage(string email);
     }
 }

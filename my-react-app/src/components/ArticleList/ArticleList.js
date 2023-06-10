@@ -37,7 +37,7 @@ function AricleList() {
             <button className="button-my-cart" onClick={handleMyCart} >My Cart</button>
             <section className="article-list">
                 {articles.map((article) => (
-                    <Article name={article.name} description={article.description} price={article.price} quantity={article.quantity} articleId={article.articleId} />
+                    <Article name={article.name} description={article.description} price={article.price} quantity={article.quantity} articleId={article.articleId} image={article.imageFile} />
                 ))
                 }
             </section>

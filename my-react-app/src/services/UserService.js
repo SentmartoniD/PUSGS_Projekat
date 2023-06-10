@@ -89,9 +89,3 @@ export const UploadImageForUser = async (img, email) => {
     );
 }
 
-export const GetImageForUser = async () => {
-    return await axios.get('https://localhost:44368/api/users/get-picture/' + GetEmail(), {
-        ...GetConfig(),
-        responseType: 'arraybuffer',
-    });
-}

@@ -56,7 +56,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.approved === 1 ?
                                 <li className="item" id={user.userId} >
-                                    <img width={50} height={50} ></img>
+                                    <img width={50} height={50} src={`data:image/png;base64,${user.imageFile}`} ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -81,7 +81,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.approved === 0 ?
                                 <li className="item" id={user.userId + 1000} >
-                                    <img width={50} height={50} ></img>
+                                    <img width={50} height={50} src={`data:image/png;base64,${user.imageFile}`} ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>

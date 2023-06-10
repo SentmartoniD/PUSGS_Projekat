@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetRegisteredUser, UpdateUser, GetImageForUser, UploadImageForUser } from "../../services/UserService";
+import { GetRegisteredUser, UpdateUser, UploadImageForUser } from "../../services/UserService";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import emailjs from "@emailjs/browser"
@@ -33,12 +33,6 @@ function Profile() {
                 console.log("this is the response");
                 console.log(resp);
                 setUser(resp.data);
-                const resp1 = await GetImageForUser();
-                const imageBytes = new Uint8Array(resp1.data);
-                const blob = new Blob([imageBytes], { type: 'image/png' });
-                console.log(URL.createObjectURL(blob));
-
-                setImage(URL.createObjectURL(blob));
             }
             catch (err) {
                 if (!err?.response)
@@ -72,7 +66,6 @@ function Profile() {
     }, [userType])
     useEffect(() => {
         setIsImageValid(image ? true : false);
-        console.log(image)
     }, [image])
     useEffect(() => {
         const result = PWD_REGEX.test(password);
@@ -89,16 +82,16 @@ function Profile() {
             alert("Your profile wont be updated, you didnt change any information!")
             return;
         }
-        if (setIsUserNameValid === false && userName != "") {
+        if (setIsUserNameValid === true) {
             alert("The username is not in a valid format!");
             return;
         }
 
         try {
-            const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, "", password);
+            const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, password);
             console.log(response.data);
             if (file != undefined) {
-                const resp1 = await UploadImageForUser(file, email);
+                const resp1 = await UploadImageForUser(file, localStorage.getItem('email'));
                 console.log(resp1)
             }
             alert("User updated successfully!")
@@ -121,7 +114,9 @@ function Profile() {
     return (
         <section className="section-profile">
             <h1 className='h1-register-profile' >Update your profile!</h1>
-            <h5 className='h1-register-profile' >Your state of verification is {user.verified === 2 ? "DENIED!" : user.verified === 1 ? "IN PORGRESS!" : "VERIFIED"}</h5>
+            {user.userType === "seller" ?
+                <h5 className='h1-register-profile' >Your state of verification is {user.verified === 2 ? "DENIED!" : user.verified === 1 ? "IN PORGRESS!" : "VERIFIED"}</h5> : null
+            }
             <form className="form-control-1-register-input" >
                 <label htmlFor='username' >Username :
                     <FontAwesomeIcon icon={faCheck} className={isUserNameValid ? "valid" : "hide"} />
@@ -191,21 +186,16 @@ function Profile() {
                     Must start with the name of the country, then city and street!<br />
                     Example : Serbia, NoviSad, Telepska 2!
                 </p>
-                <label hidden={user.userType == "admin" ? true : false} htmlFor='type' >Type of user :
+                <label hidden={user.userType == "admin" ? true : false} htmlFor='type' >Type of user : {user.userType}
                     <FontAwesomeIcon icon={faCheck} className={isUserTypeValid ? "valid" : "hide"} />
                 </label>
-                <select hidden={user.userType == "admin" ? true : false} className='input-profile' name="usertype" id="type" autoComplete='off' defaultValue={user.userType} onChange={(e) => setUserType(e.target.value)} >
-                    <option value="">--Select--</option>
-                    <option value='buyer'>Buyer</option>
-                    <option value="seller">Seller</option>
-                </select>
                 <label htmlFor='file' >Image(png) :
                     <FontAwesomeIcon icon={faCheck} className={isImageValid ? "valid" : "hide"} />
                     {/* <FontAwesomeIcon icon={faTimes} className={isImageValid || image ? "hide" : "invalid"} />*/}
                 </label>
                 <div className='div-profile-img'>
                     <input id='file' type='file' accept='image/png' className='input-register-file' onChange={handleImageChange} ></input>
-                    <img className='img-profile' src={image} width={70} height={70} ></img>
+                    <img className='img-profile' src={`data:image/png;base64,${user.imageFile}`} width={70} height={70} ></img>
                 </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />

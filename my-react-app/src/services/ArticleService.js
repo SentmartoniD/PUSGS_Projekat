@@ -41,9 +41,9 @@ export const DeleteArticle = async (articleId) => {
     return await axios.delete('https://localhost:44368/api/articles/delete/' + articleId, GetConfig());
 }
 
-export const UpdateArticle = async (id, nm, prc, quant, desc, img) => {
+export const UpdateArticle = async (id, nm, prc, quant, desc) => {
     return await axios.patch('https://localhost:44368/api/articles/update', {
-        articleID: id, name: nm, price: prc, quantity: quant, description: desc, image: img
+        articleID: id, name: nm, price: prc, quantity: quant, description: desc
     }, GetConfig()
     );
 }

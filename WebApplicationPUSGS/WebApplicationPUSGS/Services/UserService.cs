@@ -163,9 +163,18 @@ namespace WebApplicationPUSGS.Services
 
         public UserDtoRegistration UpdateUser(int id, UserDtoRegistration userDtoRegistration)
         {
-                var user =  _dbContext.Users.Find(userDtoRegistration.UserId);
+            if (_dbContext.Users.Any(u => u.Email == userDtoRegistration.Email))
+                throw new Exception("Email already in use!");
+            if (_dbContext.Users.Any(u => u.Username == userDtoRegistration.Username))
+                throw new Exception("Username already in use!");           
+            
+            var user = _dbContext.Users.Find(userDtoRegistration.UserId);
 
-                if (user != null) {
+            if (user == null)
+                throw new Exception("There is no user ith that id!");
+
+            if (user != null)
+                {
                     if (userDtoRegistration.Username != null && userDtoRegistration.Username != string.Empty)
                         user.Username = userDtoRegistration.Username;
                     if (userDtoRegistration.Email != null && userDtoRegistration.Email != string.Empty)
@@ -184,12 +193,13 @@ namespace WebApplicationPUSGS.Services
                         user.ImageFile = userDtoRegistration.ImageFile;
                     if (userDtoRegistration.Password != null && userDtoRegistration.Password != string.Empty)
                         user.Password = GetHashValueInString(userDtoRegistration.Password);
-            }
+                }
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
 
 
-            return _mapper.Map<UserDtoRegistration>(user);
+                return _mapper.Map<UserDtoRegistration>(user);
+            
         }
 
         public UserDtoStatus UpdateUserStatus(UserDtoStatus userDtoStatus)
@@ -222,10 +232,5 @@ namespace WebApplicationPUSGS.Services
             return userDtoStatus;
         }
 
-        public byte[] GetImage(string email)
-        {
-            User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
-            return user.ImageFile;
-        }
     }
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { CancelOrder } from '../services/OrderService';
 
-const CountdownTimer = ({ initialCount, id }) => {
+const CountdownTimer = ({ initialCount, id, updateSharedState }) => {
     const [count, setCount] = useState(initialCount);
+    //const [number, setNumber] = useState(initialCount);
     const [showButton, setShowButton] = useState(true);
     const [trigger, setTrigger] = useState(0);
 
@@ -17,15 +18,6 @@ const CountdownTimer = ({ initialCount, id }) => {
             clearInterval(timer);
         };
     }, []);
-    /*
-        useEffect(() => {
-            const timer = setTimeout(() => {
-                console.log(initialCount);
-                setShowButton(false);
-            }, initialCount * 500); // Multiply the number of seconds by 500 to get milliseconds
-    
-            return () => clearTimeout(timer); // Clear the timeout when the component unmounts or re-renders
-        }, [initialCount]);*/
 
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60);
@@ -40,10 +32,11 @@ const CountdownTimer = ({ initialCount, id }) => {
             console.log(response.data);
             setTrigger(trigger + 1);
             alert("You have successfully cancelled the order!")
+            updateSharedState();
         }
         catch (err) {
             if (!err?.response)
-                alert("No server response, cnaceling order failed!");
+                alert("No server response, canceling order failed!");
             else
                 alert(JSON.stringify(err.response.data));
         }

@@ -8,7 +8,7 @@ const OrderDetails = () => {
     const { id } = useParams();
     const [order, setOrder] = useState([]);
     const [counter, setCounter] = useState(0);
-    const i = 0;//i++
+    var i = -1;//i++
 
     useEffect(() => {
         const GetOrder = async () => {
@@ -32,21 +32,20 @@ const OrderDetails = () => {
             <label>Comment : {order.comment}</label>
             <label>Address : {order.address}</label>
             <label>Order price : {order.price}</label>
-            {order === [] ? null :
-                <ul>
-                    {order.articles.map((article) => (
+            <ul>
+                {order.articles &&
+                    order.articles.map((article) => (
                         <li id={article.articleId} >
-                            <h2>{article.name}</h2>
-                            <img width={120} height={120} ></img>
+                            <h2>Name : {article.name}</h2>
+                            <img width={120} height={120} src={`data:image/png;base64,${article.imageFile}`} ></img>
                             <p>{article.description}</p>
-                            <label>Article price: {article.price}</label>
-                            <label>Quantity : {article.quantity}</label>
-                            <label>Amount ordered : {order.amountOfArticles[0]}</label>
+                            <label>Price: {article.price}</label>
+                            <label>Available : {article.quantity}</label>
+                            <label>Amount : {order.amountOfArticles[++i]}</label>
                         </li>
-                    ))}
-                </ul>
-            }
-
+                    ))
+                }
+            </ul>
         </div>
     )
 }

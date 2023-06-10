@@ -69,7 +69,6 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        //KI KELL VIZSGALNI HOGY A FAJL TENYLEG KEPE, PNG/JPEG MEG HOGY NE LEGYEN TUL NAGY
 
         try {
             console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, file, password)
@@ -93,6 +92,7 @@ function Register() {
         const file = e.target.files[0];
         setFile(file);
         setImage(URL.createObjectURL(file));
+        console.log(file.type)
     }
 
     return (

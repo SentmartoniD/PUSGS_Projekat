@@ -28,10 +28,14 @@ function Login() {
     //IF isEmailValid AND isPasswordValid ARE TRUE THEN THE VALUES ARE SENT TO THE SERVER OTHERWISE ERROR
     const handleLogin = async (e) => {
         e.preventDefault();
-        if (!isEmailValid)
+        if (!isEmailValid) {
             alert("The email is not in a valid format!");
-        if (!isPasswordValid)
+            return;
+        }
+        if (!isPasswordValid) {
             alert("The password is not in a valid format!")
+            return;
+        }
         if (isPasswordValid && isEmailValid) {
             try {
                 const response = await LoginUser(email, password);

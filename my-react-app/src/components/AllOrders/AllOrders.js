@@ -46,7 +46,7 @@ const Orders = (props) => {
 
     const getTime = (dateOfOrder) => {
         const date = new Date(dateOfOrder);
-        date.setMinutes(date.getMinutes() + 4);
+        date.setMinutes(date.getMinutes() + 2);
         const currentTime = new Date();
         return Math.floor((date - currentTime) / 1000);
     };
