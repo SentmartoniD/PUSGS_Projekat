@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CreateArticle, GetArticlesByEmail, DeleteArticle, UpdateArticle } from "../../services/ArticleService";
+import { CreateArticle, GetArticlesByEmail, DeleteArticle, UpdateArticle, UploadImageForArticle } from "../../services/ArticleService";
 
 
 function Articles() {
@@ -29,15 +29,17 @@ function Articles() {
         GetAllArticles();
     }, [trigger]);
 
-    const handleAddArticle = async () => {
+    const handleAddArticle = async (e) => {
+        e.preventDefault();
         //A KEP MUSAJ HOGY PNG LEGYEN VAGY ESETLEG JPEG, ES NEM SZABAD HOGY TUL NAGY LEGYEN
         /* if (name === "" || price === 0 || quantity === 0 || description === "" || image === "") {
               alert("Must fill all fields!")
               return;
           }*/
         try {
-            const resp = await CreateArticle(name, price, quantity, description, "imageString");
+            const resp = await CreateArticle(name, price, quantity, description);
             console.log(resp.data);
+            const resp1 = await UploadImageForArticle(file, resp.data.articleId);
             alert("Successfully added the article!")
         }
         catch (err) {
@@ -128,7 +130,7 @@ function Articles() {
                                         <label htmlFor={"image_file" + article.articleId} >Image : </label>
                                         <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={(e) => setImageModify(e.target.value)} ></input>
                                     </div>
-                                    <img width={90} height={90}></img>
+                                    <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} ></img>
                                     <button onClick={() => handleUpdateArticle(article.articleId)} >Modify!</button>
                                     <button onClick={() => handleDeleteArticle(article.articleId)} >Delete!</button>
                                 </li>

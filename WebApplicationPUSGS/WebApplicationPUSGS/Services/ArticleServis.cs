@@ -8,6 +8,8 @@ using WebApplicationPUSGS.Interfaces;
 using WebApplicationPUSGS.Infrastucture;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace WebApplicationPUSGS.Services
 {
@@ -82,6 +84,23 @@ namespace WebApplicationPUSGS.Services
             _dbContext.SaveChanges();
 
             return _mapper.Map<ArticleDto>(article);
+        }
+
+        public bool UploadImage(IFormFile file, int id)
+        {
+            bool rez = true;
+
+            Article article = _dbContext.Articles.FirstOrDefault(u => u.ArticleId == id);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                article.ImageFile = memoryStream.ToArray();
+            }
+
+            _dbContext.SaveChanges();
+
+            return rez;
         }
     }
 }

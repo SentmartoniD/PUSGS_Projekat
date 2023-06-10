@@ -21,8 +21,8 @@ export const GetArticleIds = () => {
     return localStorage.getItem('email');
 }*/
 
-export const CreateArticle = async (nm, prc, quant, desc, img) => {
-    return await axios.post('https://localhost:44368/api/articles/add/' + GetEmail(), { name: nm, price: prc, quantity: quant, description: desc, image: img }, GetConfig());
+export const CreateArticle = async (nm, prc, quant, desc) => {
+    return await axios.post('https://localhost:44368/api/articles/add/' + GetEmail(), { name: nm, price: prc, quantity: quant, description: desc }, GetConfig());
 }
 
 export const GetArticles = async () => {
@@ -45,5 +45,15 @@ export const UpdateArticle = async (id, nm, prc, quant, desc, img) => {
     return await axios.patch('https://localhost:44368/api/articles/update', {
         articleID: id, name: nm, price: prc, quantity: quant, description: desc, image: img
     }, GetConfig()
+    );
+}
+
+export const UploadImageForArticle = async (img, id) => {
+    const formData = new FormData();
+    formData.append('image', img);
+    return await axios.post('https://localhost:44368/api/articles/upload-picture/' + id, formData,
+        {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }
     );
 }

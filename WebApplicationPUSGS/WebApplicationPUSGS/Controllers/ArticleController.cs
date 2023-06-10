@@ -101,5 +101,18 @@ namespace WebApplicationPUSGS.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal server error!");
             }
         }
+
+        [HttpPost("upload-picture/{id}")]
+        public ActionResult UploadPicture(IFormFile image, int id)
+        {
+            try
+            {
+                return Ok(_articleService.UploadImage(image, id));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

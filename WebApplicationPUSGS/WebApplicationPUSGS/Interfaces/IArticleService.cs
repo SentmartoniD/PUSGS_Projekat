@@ -19,5 +19,7 @@ namespace WebApplicationPUSGS.Interfaces
         ArticleDto UpdateArticle(ArticleDto articleDto);
 
         List<ArticleDto> GettArticlesForCart(List<int> articleIds);
+
+        bool UploadImage(Microsoft.AspNetCore.Http.IFormFile file, int id);
     }
 }

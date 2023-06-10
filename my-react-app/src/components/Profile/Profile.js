@@ -97,8 +97,10 @@ function Profile() {
         try {
             const response = await UpdateUser(user.userId, userName, email, firstName, lastName, dateOfBirth, address, userType, "", password);
             console.log(response.data);
-            if (file != undefined)
-                await UploadImageForUser(image, email);
+            if (file != undefined) {
+                const resp1 = await UploadImageForUser(file, email);
+                console.log(resp1)
+            }
             alert("User updated successfully!")
             setTrigger(trigger + 1);
         }
@@ -108,7 +110,6 @@ function Profile() {
             else
                 alert(JSON.stringify(err.response.data));
         }
-        console.log("vege!")
     }
 
     const handleImageChange = (e) => {
