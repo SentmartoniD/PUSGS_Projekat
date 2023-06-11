@@ -45,8 +45,6 @@ namespace WebApplicationPUSGS.Services
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
 
-            //VISSAKULDI(AZ INFORMACIOT A FRONTNAK A UJON KESZULT HASZNALOROL) A DTUUSERREGISTRATION AHOL AZ ID 0, DE BAZISBAN NEM AZ VAN
-            //ki kell hogy huzzam a bazisbol ez az uj hasznalot az id miatt
             return _mapper.Map<UserDtoRegistration>(user); 
         }
 
@@ -119,38 +117,15 @@ namespace WebApplicationPUSGS.Services
 
         }
 
-        public void DeleteUserById(int id)
-        {
-            //KELL MEG DOBALNI AZ EXCEPTIONOKAT
-            User user = _dbContext.Users.Find(id); //Ucitavamo objekat u db context (ako postoji naravno)
-
-            _dbContext.Users.Remove(user);
-
-            _dbContext.SaveChanges(); 
-        }
-
         public UserDtoRegistration GetUserById(int id)
         {
-            //KELL MEG DOBALNI AZ EXCEPTIONOKAT
+           
             return _mapper.Map<UserDtoRegistration>(_dbContext.Users.Find(id));
         }
 
         public List<UserDtoApprovedVerified> GetUsers()
         {
             return _mapper.Map<List<UserDtoApprovedVerified>>(_dbContext.Users.ToList());
-        }
-
-        private string GetHashValueInString(string inputPassword) {
-            string hashString;
-            byte[] bytes = Encoding.UTF8.GetBytes(inputPassword);
-
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] hashBytes = sha256Hash.ComputeHash(bytes);
-                hashString = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
-            }
-
-            return hashString;
         }
 
         public UserDtoApprovedVerified GetUserByEmail(string email)
@@ -230,6 +205,20 @@ namespace WebApplicationPUSGS.Services
             _dbContext.SaveChanges();
 
             return userDtoStatus;
+        }
+
+        private string GetHashValueInString(string inputPassword)
+        {
+            string hashString;
+            byte[] bytes = Encoding.UTF8.GetBytes(inputPassword);
+
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] hashBytes = sha256Hash.ComputeHash(bytes);
+                hashString = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+            }
+
+            return hashString;
         }
 
     }

@@ -15,7 +15,6 @@ const CurrentPastOrders = () => {
         const GetOrders = async () => {
             try {
                 const resp = await GetAllOrdersForBuyer();
-                console.log(resp.data);
                 setCurrentOrders(resp.data["item1"]);
                 setPastOrders(resp.data["item2"]);
             }

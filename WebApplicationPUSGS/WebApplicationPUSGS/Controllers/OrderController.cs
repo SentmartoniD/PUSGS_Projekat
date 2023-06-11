@@ -94,7 +94,7 @@ namespace WebApplicationPUSGS.Controllers
         public ActionResult CancelOrder(int id) {
             try
             {
-                _orderService.DeleteOrder(id);
+                _orderService.CanceleOrder(id);
                 return Ok();
             }
             catch (Exception)

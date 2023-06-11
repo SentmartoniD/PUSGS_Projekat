@@ -14,6 +14,7 @@ const LASTNAME_REGEX = /^[A-Z][a-zA-Z]{3,20}$/;
 const ADDRESS_REGEX = /^[A-Z][a-zA-Z0-9 ]{2,15},[ ]?[A-Z][a-zA-Z ]{2,15},[ ]?[A-Z][a-zA-Z ]{2,15}[ ][0-9]{1,4}$/;
 
 function Register() {
+
     //USESTATES FOR THE INPUT FIELDS
     const [userName, setUserName] = useState(''); const [isUserNameValid, setIsUserNameValid] = useState(false); const [isUserNameFocus, setIsUserNameFocus] = useState(false);
     const [email, setEmail] = useState(''); const [isEmailValid, setIsEmailValid] = useState(false); const [isEmailFocus, setIsEmailFocus] = useState(false);
@@ -30,9 +31,6 @@ function Register() {
     //VALIDATION OF THE INPUTS
     useEffect(() => {
         setIsUserNameValid(USERNAME_REGEX.test(userName));
-        /* const api = `${process.env.API_URL}`;
-         console.log("hi")
-         console.log(api);*/
     }, [userName])
     useEffect(() => {
         setIsEmailValid(EMAIL_REGEX.test(email));
@@ -72,10 +70,8 @@ function Register() {
 
         try {
             console.log(userName, email, firstName, lastName, dateOfBirth, address, userType, file, password)
-            const response = await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, password);
-            console.log(response.data);
-            const response2 = await UploadImageForUser(file, email);
-            console.log(response2.data);
+            await RegisterUser(userName, email, firstName, lastName, dateOfBirth, address, userType, password);
+            await UploadImageForUser(file, email);
             alert("You have successfully registered!")
             navigateToLogin();
         }
@@ -181,7 +177,7 @@ function Register() {
                 </label>
                 <div className='div-register-img'>
                     <input id='file' type='file' required accept='image/png' className='input-register-file' onChange={handleImageChange} ></input>
-                    <img className='img-register' width={70} height={70} src={image} ></img>
+                    <img className='img-register' width={70} height={70} src={image} alt='' ></img>
                 </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />

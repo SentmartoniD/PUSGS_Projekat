@@ -39,18 +39,10 @@ function Login() {
         if (isPasswordValid && isEmailValid) {
             try {
                 const response = await LoginUser(email, password);
-                console.log(response.data)
                 const token = response.data;
-                //HA A USER SELLER AKO KI KELL MUTATNI EGY ABLAKON AZ ALAPOTAT
                 localStorage.setItem('token', token);
                 localStorage.setItem('email', email);
                 localStorage.setItem('articles', JSON.stringify([]));
-                const [header, payload, signature] = token.split('.');
-                const decodedPayload = atob(payload);
-                const payloadObj = JSON.parse(decodedPayload);
-                console.log(payloadObj["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"])
-                console.log(payloadObj["verified"]);
-
                 navigateToHome();
             } catch (err) {
                 if (!err?.response)
@@ -67,9 +59,9 @@ function Login() {
             <form>
                 <div className="form-control-login" >
                     <label className="label-login-1" htmlFor="inputEmail" >Email: </label>
-                    <input className="input-login-1" id="inputEmail" type="text" onChange={(e) => setEmail(e.target.value)} ></input>
+                    <input className="input-login-1" id="inputEmail" type="text" onChange={(e) => setEmail(e.target.value)} autoComplete='off' ></input>
                     <label className="label-login-2" htmlFor="inputPassword" >Password:  </label>
-                    <input className="input-login-2" id="inputPassword" type="text" onChange={(e) => setPassword(e.target.value)} ></input>
+                    <input className="input-login-2" id="inputPassword" type="text" onChange={(e) => setPassword(e.target.value)} autoComplete='off' ></input>
                 </div>
                 <div className="form-control-2-login" >
                     <button className="button-9-login" onClick={handleLogin} >Sign In</button>

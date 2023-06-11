@@ -20,17 +20,14 @@ const Orders = (props) => {
                 //const resp = null;
                 if (props.userType === "admin") {
                     const resp = await GetAllOrdersForAdmin();
-                    console.log(resp.data);
                     setOrders(resp.data);
                 }
                 else if (props.userType === "seller-new") {
                     const resp = await GetAllCurrentOrdersForSeller();
-                    console.log(resp.data);
                     setOrders(resp.data);
                 }
                 else if (props.userType === "seller-my") {
                     const resp = await GetAllPastOrdersForSeller();
-                    console.log(resp.data);
                     setOrders(resp.data);
                 }
             }

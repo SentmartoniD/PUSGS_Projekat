@@ -168,7 +168,7 @@ namespace WebApplicationPUSGS.Services
             return new Tuple<List<OrderDto>, List<OrderDto>>(currentOrdersDto, pasttOrdersDto);
         }
 
-        public void DeleteOrder(int id)
+        public void CanceleOrder(int id)
         {
             Order order = _dbContext.Orders.FirstOrDefault(X => X.OrderId == id);
             order.DateOfOrder = "canceled";

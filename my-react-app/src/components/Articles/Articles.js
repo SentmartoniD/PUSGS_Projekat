@@ -39,8 +39,7 @@ function Articles() {
 
         try {
             const resp = await CreateArticle(name, price, quantity, description);
-            console.log(resp.data);
-            const resp1 = await UploadImageForArticle(file, resp.data.articleId);
+            await UploadImageForArticle(file, resp.data.articleId);
             setImageModify("");
             alert("Successfully added the article!")
         }
@@ -55,7 +54,7 @@ function Articles() {
 
     const handleDeleteArticle = async (id) => {
         try {
-            const resp = await DeleteArticle(id);
+            await DeleteArticle(id);
             alert("Successfully deleted the article!");
         }
         catch (err) {
@@ -73,11 +72,10 @@ function Articles() {
             return;
         }
         try {
-            const resp = await UpdateArticle(id, nameModify, priceModify, quantityModify, descriptionModify);
-            console.log(resp.data);
+            await UpdateArticle(id, nameModify, priceModify, quantityModify, descriptionModify);
             alert("Successfully updated the article!");
             if (imageModify !== undefined) {
-                const resp1 = await UploadImageForArticle(file, id);
+                await UploadImageForArticle(file, id);
             }
         }
         catch (err) {
@@ -108,16 +106,16 @@ function Articles() {
                 <h1 className="h1-articles" >Add new article!</h1>
                 <form className="form-control-articles" >
                     <label htmlFor="name" >Name : </label>
-                    <input id="name" type="text" className="input-articles" required onChange={(e) => setName(e.target.value)} ></input>
+                    <input id="name" type="text" className="input-articles" required onChange={(e) => setName(e.target.value)} autoComplete='off' ></input>
                     <label htmlFor="price" >Price(din) : </label>
-                    <input id="price" type="number" className="input-articles" required onChange={(e) => setPrice(e.target.value)} ></input>
+                    <input id="price" type="number" className="input-articles" required onChange={(e) => setPrice(e.target.value)} autoComplete='off' ></input>
                     <label htmlFor="quantity" >Quantity : </label>
-                    <input id="quantity" type="number" className="input-articles" required onChange={(e) => setQuantity(e.target.value)} ></input>
+                    <input id="quantity" type="number" className="input-articles" required onChange={(e) => setQuantity(e.target.value)} autoComplete='off' ></input>
                     <label htmlFor="description" >Description : </label>
-                    <input id="description" type="text" className="input-articles" required onChange={(e) => setDescription(e.target.value)} ></input>
-                    <img className="image-articles" width={100} height={100} src={image} ></img>
+                    <input id="description" type="text" className="input-articles" required onChange={(e) => setDescription(e.target.value)} autoComplete='off' ></input>
+                    <img className="image-articles" width={100} height={100} src={image} alt="" ></img>
                     <label htmlFor="image_file" >Image : </label>
-                    <input id="image_file" type='file' accept='image/png' className="input-articles-image" required onChange={handleImageChange} ></input>
+                    <input id="image_file" type='file' accept='image/png' className="input-articles-image" required onChange={handleImageChange}></input>
                     <button className="button-9-articles" onClick={handleAddArticle} >Add</button>
                 </form>
             </div>
@@ -128,7 +126,7 @@ function Articles() {
                         {
                             articles.map((article) => (
                                 <li id={article.articleId} className="item-articles" >
-                                    <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} className="img-articles" ></img>
+                                    <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} className="img-articles" alt="" ></img>
                                     <div className="div-articles1" >
                                         <label htmlFor={"image_file" + article.articleId} >Image : </label>
                                         <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={handleModifyImageChange} ></input>

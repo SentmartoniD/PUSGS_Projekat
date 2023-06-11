@@ -10,7 +10,6 @@ function AricleList() {
         const GetAllArticles = async () => {
             try {
                 const resp = await GetArticles();
-                console.log(resp.data);
                 setArticles(resp.data);
             }
             catch (err) {

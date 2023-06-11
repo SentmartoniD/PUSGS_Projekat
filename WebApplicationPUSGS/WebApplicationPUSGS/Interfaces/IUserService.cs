@@ -14,8 +14,6 @@ namespace WebApplicationPUSGS.Interfaces
         
         string LoginUser(UserDtoLogin userDto);
 
-        void DeleteUserById(int id);
-
         UserDtoRegistration GetUserById(int id);
 
         UserDtoApprovedVerified GetUserByEmail(string email);

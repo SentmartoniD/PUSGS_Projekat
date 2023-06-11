@@ -11,15 +11,13 @@ function ApproveVerifyUsers() {
         const getUsers = async () => {
             try {
                 const resp = await GetUsers();
-                console.log("this is the response");
-                console.log(resp);
                 setUsers(resp.data);
             }
             catch (err) {
                 if (!err?.response)
-                    console.log("No server response");
+                    alert("No server response");
                 else
-                    console.log(JSON.stringify(err.response.data));
+                    alert(JSON.stringify(err.response.data));
             }
         }
         getUsers();
@@ -27,7 +25,7 @@ function ApproveVerifyUsers() {
 
     const handleStatus = async (userid, status) => {
         try {
-            const response = await UpdateUserStatus(userid, status);
+            await UpdateUserStatus(userid, status);
             alert("Users status changed successfully!")
             if (status === "verify") {
                 await SendEmail('Your account has been verified!');
@@ -56,7 +54,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.approved === 1 ?
                                 <li className="item" id={user.userId} >
-                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" ></img>
+                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" alt="" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -81,7 +79,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.approved === 0 ?
                                 <li className="item2" id={user.userId + 10000} >
-                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" ></img>
+                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" alt="" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -102,7 +100,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.verified === 1 && user.userType === "seller" && user.approved === 0 ?
                                 <li className="item" id={user.userId + 20000} >
-                                    <img width={70} height={70} className="img-avu" ></img>
+                                    <img width={70} height={70} className="img-avu" alt="" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -125,7 +123,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.verified === 0 && user.userType === "seller" ?
                                 <li className="item2" id={user.userId + 30000} >
-                                    <img width={70} height={70} className="img-avu" ></img>
+                                    <img width={70} height={70} className="img-avu" alt="" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>

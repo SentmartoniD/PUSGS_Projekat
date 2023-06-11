@@ -27,6 +27,10 @@ namespace WebApplicationPUSGS.Services
         public ArticleDto AddArticle(string email, ArticleDto articleDto)
         {
             User user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
+
+            if (user == null)
+                throw new Exception();
+
             _dbContext.Entry(user).State = EntityState.Detached;
 
             Article article = _mapper.Map<Article>(articleDto);
@@ -41,6 +45,9 @@ namespace WebApplicationPUSGS.Services
         public void DeleteArticleById(int id)
         {
             Article article = _dbContext.Articles.Find(id);
+            /*
+            if (article == null)
+                throw new Exception();*/
 
             _dbContext.Articles.Remove(article);
 

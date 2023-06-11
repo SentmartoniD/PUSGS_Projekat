@@ -118,7 +118,6 @@ namespace WebApplicationPUSGS.Controllers
             catch (Exception)
             {
 
-                //NotFound();
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             

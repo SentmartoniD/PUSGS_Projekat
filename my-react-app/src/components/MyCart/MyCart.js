@@ -105,7 +105,7 @@ function MyCart() {
                                         <label>Seller email : {article.userSeller.email}</label>
                                         <div>
                                             <label>Quantity</label>
-                                            <input id={article.articleId + "amount"} type="number" min={1} defaultValue={1} step={1} max={article.quantity}></input>
+                                            <input id={article.articleId + "amount"} type="number" min={1} defaultValue={1} step={1} max={article.quantity} ></input>
                                         </div>
                                     </article>
                                 </li>
@@ -114,7 +114,6 @@ function MyCart() {
                     </ul>
             }
             <div className="div-control-mycart" >
-                <label>Total amount : {233244}(din)</label>
                 <label>Comment :</label>
                 <input className="input-mycart" type="text" onChange={(e) => setComment(e.target.value)} ></input>
                 <label>Address :</label>
