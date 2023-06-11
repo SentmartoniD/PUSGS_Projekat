@@ -13,7 +13,7 @@ import AricleList from './components/ArticleList/ArticleList';
 import MyCart from './components/MyCart/MyCart';
 import AllOrders from './components/AllOrders/AllOrders';
 import CurrentPastOrders from './components/CurrentPastOrders/CurrentPastOrders';
-import OrderDetails from './components/OrderDetails.js/OrderDetails';
+import OrderDetails from './components/OrderDetails/OrderDetails';
 
 function App() {
   return (

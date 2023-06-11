@@ -8,6 +8,8 @@ import "../Articles/Articles.css"
 import "../ArticleList/ArticleList.css"
 import "../MyCart/MyCart.css"
 import "../AllOrders/AllOrders.css"
+import "../CurrentPastOrders/CurrentPastOrders.css"
+import "../OrderDetails/OrderDetails.css"
 
 function Dashboard() {
 

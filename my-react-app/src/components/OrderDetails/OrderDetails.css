@@ -1,0 +1,26 @@
+.section-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 300px;
+    align-items: center;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.25rem 0;
+    border: 1px solid white;
+}
+
+.div-details {
+    border: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 10px;
+}

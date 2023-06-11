@@ -51,14 +51,14 @@ const CurrentPastOrders = () => {
     };
 
     return (
-        <section className="continaer-cpo" >
+        <section className="container-cpo" >
             <div className="box-cpo" >
                 <h1 className="h1-cpo" >Current orders!</h1>
                 {
                     currentOrders.length === 0 ? <></> :
-                        <ul >
+                        <ul className="ul-items-cpo" >
                             {currentOrders.map((order) => (
-                                <li id={order.orderId}  >
+                                <li id={order.orderId} className="item-cpo" >
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
@@ -73,13 +73,13 @@ const CurrentPastOrders = () => {
                 <h1 className="h1-cpo" >Past orders!</h1>
                 {
                     pastOrders.length === 0 ? <></> :
-                        <ul >
+                        <ul className="ul-items-cpo" >
                             {pastOrders.map((order) => (
-                                <li id={order.orderId}>
+                                <li id={order.orderId} className="item-cpo" >
                                     <label>Address : {order.address}</label>
                                     <label>Comment : {order.comment}</label>
                                     <label>Price : {order.price}</label>
-                                    <button onClick={() => handleDetails(order.orderId)} >Details</button>
+                                    <button onClick={() => handleDetails(order.orderId)} className="button-9-allorders" >Details</button>
                                 </li>
                             ))}
                         </ul>

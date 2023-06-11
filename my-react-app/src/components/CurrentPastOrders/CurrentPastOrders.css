@@ -6,7 +6,7 @@
 }
 
 .box-cpo {
-    width: 25%;
+    width: 50%;
     /* Adjust the width as needed */
     height: 100px;
     /* Adjust the height as needed */
@@ -18,4 +18,26 @@
     padding-top: 5px;
     padding-right: 20px;
     padding-left: 20px;
+}
+
+.ul-items-cpo {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 35px;
+}
+
+.item-cpo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 130px;
+    width: 300px;
+    align-items: center;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 0.25rem 0;
+    background-color: grey;
 }

@@ -28,8 +28,7 @@ const CountdownTimer = ({ initialCount, id, updateSharedState }) => {
 
     const handleCancelOrder = async () => {
         try {
-            const response = await CancelOrder(id);
-            console.log(response.data);
+            await CancelOrder(id);
             setTrigger(trigger + 1);
             alert("You have successfully cancelled the order!")
             updateSharedState();
@@ -44,7 +43,7 @@ const CountdownTimer = ({ initialCount, id, updateSharedState }) => {
 
     return (
         <div>
-            {count > 0 ? <div>Delivery time : {formatTime(count)}</div> : null}
+            {count > 0 ? <div style={{ color: 'white' }} >Delivery time : {formatTime(count)}</div> : null}
             {showButton && id != null ? <button onClick={handleCancelOrder} >Cancel order!</button> : null}
         </div>
     );

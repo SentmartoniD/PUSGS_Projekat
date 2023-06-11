@@ -128,21 +128,25 @@ function Articles() {
                         {
                             articles.map((article) => (
                                 <li id={article.articleId} className="item-articles" >
+                                    <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} className="img-articles" ></img>
+                                    <div className="div-articles1" >
+                                        <label htmlFor={"image_file" + article.articleId} >Image : </label>
+                                        <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={handleModifyImageChange} ></input>
+                                    </div>
                                     <div>
                                         <label htmlFor={"name" + article.articleId} className="label-articles-view" >Name : </label>
                                         <input id={"name" + article.articleId} type="text" className="input-articles" defaultValue={article.name} required onChange={(e) => setNameModify(e.target.value)} ></input>
                                         <label htmlFor={"price" + article.articleId} >Price(din) : </label>
                                         <input id={"price" + article.articleId} type="number" className="input-articles" defaultValue={article.price} required onChange={(e) => setPriceModify(e.target.value)} ></input>
-                                        <label htmlFor={"quantity" + article.articleId} >Quantity : </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor={"quantity" + article.articleId} className="label-articles-view" >Quantity : </label>
                                         <input id={"quantity" + article.articleId} type="number" className="input-articles" defaultValue={article.quantity} required onChange={(e) => setQuantityModify(e.target.value)} ></input>
                                         <label htmlFor={"description" + article.articleId} >Description : </label>
                                         <input id={"description" + article.articleId} type="text" className="input-articles" defaultValue={article.description} required onChange={(e) => setDescriptionModify(e.target.value)} ></input>
-                                        <label htmlFor={"image_file" + article.articleId} >Image : </label>
-                                        <input id={"image_file" + article.articleId} type='file' accept='image/ng' className="input-articles-image" required onChange={handleModifyImageChange} ></input>
                                     </div>
-                                    <img width={90} height={90} src={`data:image/png;base64,${article.imageFile}`} ></img>
-                                    <button onClick={() => handleUpdateArticle(article.articleId)} >Modify!</button>
-                                    <button onClick={() => handleDeleteArticle(article.articleId)} >Delete!</button>
+                                    <button onClick={() => handleUpdateArticle(article.articleId)} className="button-articles" >Modify!</button>
+                                    <button onClick={() => handleDeleteArticle(article.articleId)} className="button-articles" >Delete!</button>
                                 </li>
                             ))
                         }

@@ -56,7 +56,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.approved === 1 ?
                                 <li className="item" id={user.userId} >
-                                    <img width={50} height={50} src={`data:image/png;base64,${user.imageFile}`} ></img>
+                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -64,10 +64,10 @@ function ApproveVerifyUsers() {
                                     <label className="label-avu" >Date of birth : {user.dateOfBirth}</label>
                                     <label className="label-avu" >Address : {user.address}</label>
                                     <label className="label-avu" >User type : {user.userType}</label>
-                                    <button onClick={() => handleStatus(user.userId, "approved")} >Approve registration!</button>
-                                    <button onClick={() => handleStatus(user.userId, "deny")} >Deny registration!</button>
+                                    <button onClick={() => handleStatus(user.userId, "approved")} className="button-avu" >Approve registration!</button>
+                                    <button onClick={() => handleStatus(user.userId, "deny")} className="button-avu" >Deny registration!</button>
                                 </li>
-                                : <></>
+                                : null
                         ))}
                     </ul>
                 }
@@ -80,8 +80,8 @@ function ApproveVerifyUsers() {
                     <ul className="ul-items">
                         {users.map((user) => (
                             user.approved === 0 ?
-                                <li className="item" id={user.userId + 1000} >
-                                    <img width={50} height={50} src={`data:image/png;base64,${user.imageFile}`} ></img>
+                                <li className="item2" id={user.userId + 10000} >
+                                    <img width={70} height={70} src={`data:image/png;base64,${user.imageFile}`} className="img-avu" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -90,7 +90,7 @@ function ApproveVerifyUsers() {
                                     <label className="label-avu" >Address : {user.address}</label>
                                     <label className="label-avu" >User type : {user.userType}</label>
                                 </li>
-                                : <></>
+                                : null
                         ))}
                     </ul>
                 }
@@ -101,8 +101,8 @@ function ApproveVerifyUsers() {
                     <ul className="ul-items">
                         {users.map((user) => (
                             user.verified === 1 && user.userType === "seller" && user.approved === 0 ?
-                                <li className="item" id={user.userId + 2000} >
-                                    <img width={50} height={50} ></img>
+                                <li className="item" id={user.userId + 20000} >
+                                    <img width={70} height={70} className="img-avu" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -110,10 +110,10 @@ function ApproveVerifyUsers() {
                                     <label className="label-avu" >Date of birth : {user.dateOfBirth}</label>
                                     <label className="label-avu" >Address : {user.address}</label>
                                     <label className="label-avu" >User type : {user.userType}</label>
-                                    <button onClick={() => handleStatus(user.userId, "verify")} >Verify registration!</button>
-                                    <button onClick={() => handleStatus(user.userId, "unverify")} >Unverify registration!</button>
+                                    <button onClick={() => handleStatus(user.userId, "verify")} className="button-avu" >Verify registration!</button>
+                                    <button onClick={() => handleStatus(user.userId, "unverify")} className="button-avu" >Unverify registration!</button>
                                 </li>
-                                : <></>
+                                : null
                         ))}
                     </ul>
                 }
@@ -124,8 +124,8 @@ function ApproveVerifyUsers() {
                     <ul className="ul-items" >
                         {users.map((user) => (
                             user.verified === 0 && user.userType === "seller" ?
-                                <li className="item" id={user.userId + 3000} >
-                                    <img width={50} height={50} ></img>
+                                <li className="item2" id={user.userId + 30000} >
+                                    <img width={70} height={70} className="img-avu" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -134,7 +134,7 @@ function ApproveVerifyUsers() {
                                     <label className="label-avu" >Address : {user.address}</label>
                                     <label className="label-avu" >User type : {user.userType}</label>
                                 </li>
-                                : <></>
+                                : null
                         ))}
                     </ul>
                 }

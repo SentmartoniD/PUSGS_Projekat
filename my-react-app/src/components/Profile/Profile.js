@@ -195,7 +195,7 @@ function Profile() {
                 </label>
                 <div className='div-profile-img'>
                     <input id='file' type='file' accept='image/png' className='input-register-file' onChange={handleImageChange} ></input>
-                    <img className='img-profile' src={`data:image/png;base64,${user.imageFile}`} width={70} height={70} ></img>
+                    <img className='img-profile' src={file === undefined ? `data:image/png;base64,${user.imageFile}` : image} width={70} height={70} ></img>
                 </div>
                 <label htmlFor='password1' >Password :
                     <FontAwesomeIcon icon={faCheck} className={isPasswordValid ? "valid" : "hide"} />

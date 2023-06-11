@@ -39,7 +39,7 @@ label {
 }
 
 .input-register-file {
-    margin-top: 5px;
+    margin-top: 25px;
     margin-bottom: 5px;
     margin-left: 30px;
     margin-right: 30px;
@@ -99,13 +99,6 @@ label {
     margin-top: 20px;
     height: 44px;
     align-self: center;
-    /*
-    background-color: #405cf5;
-        font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif;
-            font-size: 100%;
-            
-            color: #fff;
-            align-self: center;*/
 }
 
 .img-register {

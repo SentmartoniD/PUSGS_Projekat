@@ -28,25 +28,27 @@ const OrderDetails = () => {
     }, [])
 
     return (
-        <div>
-            <label>Comment : {order.comment}</label>
-            <label>Address : {order.address}</label>
-            <label>Order price : {order.price}</label>
-            <ul>
+        <section className="section-details" >
+            <div className="div-details" >
+                <label>Comment : {order.comment}</label>
+                <label>Address : {order.address}</label>
+                <label>Order price : {order.price}</label>
+            </div>
+            <ul className="ul-items-allorders" >
                 {order.articles &&
                     order.articles.map((article) => (
-                        <li id={article.articleId} >
-                            <h2>Name : {article.name}</h2>
-                            <img width={120} height={120} src={`data:image/png;base64,${article.imageFile}`} ></img>
-                            <p>{article.description}</p>
+                        <li id={article.articleId} className="item-details" >
+                            <h2 style={{ color: 'white' }} >{article.name}</h2>
+                            <img style={{ border: '2px solid white' }} width={120} height={120} src={`data:image/png;base64,${article.imageFile}`} ></img>
+                            <label>Description : {article.description}</label>
                             <label>Price: {article.price}</label>
                             <label>Available : {article.quantity}</label>
-                            <label>Amount : {order.amountOfArticles[++i]}</label>
+                            <label>Amount ordered : {order.amountOfArticles[++i]}</label>
                         </li>
                     ))
                 }
             </ul>
-        </div>
+        </section>
     )
 }
 

@@ -14,8 +14,10 @@
 }
 
 .button-my-cart {
-    margin-left: 1400px;
+    margin-left: 1320px;
     margin-top: 8px;
+    width: 130px;
+    height: 30px;
 }
 
 .article {

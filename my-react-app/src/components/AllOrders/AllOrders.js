@@ -57,7 +57,7 @@ const Orders = (props) => {
 
     return (
         <section className="section-allorders" >
-            <h1>Orders!</h1>
+            <h1 className="h1-allorders" >Orders!</h1>
             {
                 orders.length === 0 ? <></> :
                     <ul className="ul-items-allorders" >
@@ -68,7 +68,7 @@ const Orders = (props) => {
                                 <label>Price : {order.price}</label>
                                 {props.userType === "admin" ? <label>Delivery state : {order.dateOfOrder === "canceled" ? "Canceled!" : getTime(order.dateOfOrder) > 0 ? "In delivery!" : "Delivered!"}</label> : <></>}
                                 {props.userType === "seller-new" ? <CountdownTimer initialCount={getTime(order.dateOfOrder)} /> : <></>}
-                                <button onClick={() => handleDetails(order.orderId)} >Details</button>
+                                <button onClick={() => handleDetails(order.orderId)} className="button-9-allorders" >Details</button>
                             </li>
                         ))}
                     </ul>
