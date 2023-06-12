@@ -100,7 +100,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.verified === 1 && user.userType === "seller" && user.approved === 0 ?
                                 <li className="item" id={user.userId + 20000} >
-                                    <img width={70} height={70} className="img-avu" alt="" ></img>
+                                    <img width={70} height={70} className="img-avu" alt="" src={`data:image/png;base64,${user.imageFile}`} ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
@@ -123,7 +123,7 @@ function ApproveVerifyUsers() {
                         {users.map((user) => (
                             user.verified === 0 && user.userType === "seller" ?
                                 <li className="item2" id={user.userId + 30000} >
-                                    <img width={70} height={70} className="img-avu" alt="" ></img>
+                                    <img width={70} height={70} className="img-avu" src={`data:image/png;base64,${user.imageFile}`} alt="" ></img>
                                     <label className="label-avu" >Username : {user.username}</label>
                                     <label className="label-avu" >Email : {user.email}</label>
                                     <label className="label-avu" >First name : {user.firstName}</label>
